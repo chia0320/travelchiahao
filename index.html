@@ -7,7 +7,7 @@
     <style>
         /* 文青配色與排版 */
         body {
-            font-family: 'Noto Sans TC', sans-serif; /* 確保中文字體美觀 */
+            font-family: 'Noto Sans TC', sans-serif;
             background-color: #fcfbf7; /* 柔和米白背景 */
             margin: 0;
             padding: 20px;
@@ -41,7 +41,7 @@
             cursor: pointer;
             transition: background-color 0.3s, color 0.3s;
             font-weight: bold;
-            color: #7f8c8d; /* 內建文字色 */
+            color: #7f8c8d;
             flex-shrink: 0;
         }
         .day-tab.active {
@@ -59,14 +59,40 @@
         }
         .itinerary-day { display: none; }
         .itinerary-day.active { display: block; }
+
+        /* 天氣顯示區塊樣式 */
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-left: 5px solid #bca47c;
+            padding-left: 10px;
+        }
         .day-title {
             font-size: 1.4em;
             font-weight: 600;
             color: #5c5c5c;
-            margin-bottom: 15px;
-            border-left: 5px solid #bca47c; /* 土黃色分隔線 */
-            padding-left: 10px;
+            margin: 0;
         }
+        .weather-box {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            text-align: right;
+            line-height: 1.2;
+            min-width: 100px;
+            flex-shrink: 0;
+        }
+        .weather-temp {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #bca47c;
+        }
+        .weather-icon {
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+        
         /* 行程卡片 */
         .activity-card {
             display: flex;
@@ -75,7 +101,7 @@
             padding: 15px;
             background-color: #f7f5f0; /* 卡片淡米色背景 */
             border-radius: 8px;
-            border-left: 5px solid #7f8c8d; /* 溫暖中灰分隔線 */
+            border-left: 5px solid #7f8c8d;
             box-shadow: 0 1px 3px rgba(0,0,0,0.03);
         }
         .time-box {
@@ -94,13 +120,13 @@
             margin-bottom: 5px;
         }
         .note { font-size: 0.8em; color: #888; margin-top: 5px; }
-        .highlight { border-left: 5px solid #bca47c; } /* 住宿/特殊提醒用土黃色 */
+        .highlight { border-left: 5px solid #bca47c; }
         
         /* 地圖連結樣式 */
         .location a {
-            color: #5c5c5c; /* 讓連結顏色不要太突兀 */
-            text-decoration: none; /* 移除下劃線 */
-            border-bottom: 1px dashed #bca47c; /* 使用虛線作為文青感強調 */
+            color: #5c5c5c;
+            text-decoration: none;
+            border-bottom: 1px dashed #bca47c;
             cursor: pointer;
         }
     </style>
@@ -112,18 +138,21 @@
     </div>
 
     <div class="day-nav">
-        <div class="day-tab active" data-day="D1">D1 <br> 1/1</div>
-        <div class="day-tab" data-day="D2">D2 <br> 1/2</div>
-        <div class="day-tab" data-day="D3">D3 <br> 1/3</div>
-        <div class="day-tab" data-day="D4">D4 <br> 1/4</div>
-        <div class="day-tab" data-day="D5">D5 <br> 1/5</div>
-        <div class="day-tab" data-day="D6">D6 <br> 1/6</div>
+        <div class="day-tab active" data-day="D1" data-city="Fukuoka, JP">D1 <br> 1/1</div>
+        <div class="day-tab" data-day="D2" data-city="Beppu, JP">D2 <br> 1/2</div>
+        <div class="day-tab" data-day="D3" data-city="Aso, JP">D3 <br> 1/3</div>
+        <div class="day-tab" data-day="D4" data-city="Takachiho, JP">D4 <br> 1/4</div>
+        <div class="day-tab" data-day="D5" data-city="Fukuoka, JP">D5 <br> 1/5</div>
+        <div class="day-tab" data-day="D6" data-city="Fukuoka, JP">D6 <br> 1/6</div>
     </div>
 
     <div class="itinerary-container">
         
         <div class="itinerary-day active" id="D1">
-            <div class="day-title">1 月 1 日 (一) - 福岡市區</div>
+            <div class="day-header">
+                <div class="day-title">1 月 1 日 (一) - 福岡市區</div>
+                <div class="weather-box" id="weather-D1"></div>
+            </div>
             <div class="activity-card">
                 <div class="time-box">11:00</div>
                 <div class="details">
@@ -155,7 +184,10 @@
         </div>
         
         <div class="itinerary-day" id="D2">
-            <div class="day-title">1 月 2 日 (二) - 別府 & 由布院</div>
+            <div class="day-header">
+                <div class="day-title">1 月 2 日 (二) - 別府 & 由布院</div>
+                <div class="weather-box" id="weather-D2"></div>
+            </div>
             <div class="activity-card">
                 <div class="time-box">09:00</div>
                 <div class="details">
@@ -194,7 +226,10 @@
         </div>
 
         <div class="itinerary-day" id="D3">
-            <div class="day-title">1 月 3 日 (三) - 阿蘇山區</div>
+            <div class="day-header">
+                <div class="day-title">1 月 3 日 (三) - 阿蘇山區</div>
+                <div class="weather-box" id="weather-D3"></div>
+            </div>
             <div class="activity-card">
                 <div class="time-box">11:00</div>
                 <div class="details">
@@ -233,7 +268,10 @@
         </div>
         
         <div class="itinerary-day" id="D4">
-            <div class="day-title">1 月 4 日 (四) - 高千穗</div>
+            <div class="day-header">
+                <div class="day-title">1 月 4 日 (四) - 高千穗</div>
+                <div class="weather-box" id="weather-D4"></div>
+            </div>
             <div class="activity-card">
                 <div class="time-box">10:00</div>
                 <div class="details">
@@ -265,7 +303,10 @@
         </div>
 
         <div class="itinerary-day" id="D5">
-            <div class="day-title">1 月 5 日 (五) - 返程福岡</div>
+            <div class="day-header">
+                <div class="day-title">1 月 5 日 (五) - 返程福岡</div>
+                <div class="weather-box" id="weather-D5"></div>
+            </div>
             <div class="activity-card">
                 <div class="time-box">08:30</div>
                 <div class="details">
@@ -311,7 +352,10 @@
         </div>
         
         <div class="itinerary-day" id="D6">
-            <div class="day-title">1 月 6 日 (六) - 返國</div>
+            <div class="day-header">
+                <div class="day-title">1 月 6 日 (六) - 返國</div>
+                <div class="weather-box" id="weather-D6"></div>
+            </div>
             <div class="activity-card">
                 <div class="time-box">09:00</div>
                 <div class="details">
@@ -331,26 +375,122 @@
     </div>
 
 <script>
-    // JavaScript 程式碼：處理點擊事件和內容切換
+    // ====================================================================
+    // JavaScript 程式碼：處理點擊事件和天氣 API 呼叫
+    // ====================================================================
+    
+    // 您的 OpenWeather API Key
+    const API_KEY = "f59530fab0600c5a0ff62aa969a9e59a"; 
+    const BASE_URL = "https://api.openweathermap.org/data/2.5/weather";
+
+    // 儲存已獲取的天氣數據，避免重複呼叫
+    const weatherCache = {};
+
+    /**
+     * 從 OpenWeatherMap 獲取指定城市的天氣數據並顯示。
+     * @param {string} city - 城市名稱，例如 "Fukuoka, JP"。
+     * @param {string} elementId - 顯示天氣的 HTML 元素 ID，例如 "weather-D1"。
+     */
+    async function fetchWeather(city, elementId) {
+        const weatherBox = document.getElementById(elementId);
+        if (!weatherBox) return;
+
+        // 如果快取中有數據，直接使用
+        if (weatherCache[city]) {
+            displayWeather(weatherBox, weatherCache[city]);
+            return;
+        }
+
+        // 顯示載入中
+        weatherBox.innerHTML = `<span>載入 ${city.split(',')[0]} 天氣...</span>`;
+
+        try {
+            const url = `${BASE_URL}?q=${city}&appid=${API_KEY}&units=metric&lang=zh_tw`;
+            const response = await fetch(url);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            weatherCache[city] = data; // 存入快取
+            displayWeather(weatherBox, data);
+
+        } catch (error) {
+            console.error(`Fetch error for ${city}:`, error);
+            weatherBox.innerHTML = `<span style="color:red;">天氣資訊無法載入</span>`;
+        }
+    }
+
+    /**
+     * 將解析後的天氣數據渲染到指定的 HTML 元素中。
+     */
+    function displayWeather(element, data) {
+        if (!data || !data.main || !data.weather || data.weather.length === 0) {
+            element.innerHTML = `<span style="color:red;">無天氣數據</span>`;
+            return;
+        }
+
+        const temp = Math.round(data.main.temp);
+        const description = data.weather[0].description;
+        const iconCode = data.weather[0].icon;
+        const iconUrl = `http://openweathermap.org/img/wn/${iconCode}.png`;
+        const cityZh = data.name;
+
+        element.innerHTML = `
+            ${cityZh}
+            <div class="weather-temp">
+                <img src="${iconUrl}" class="weather-icon" alt="${description}" width="30" height="30">
+                ${temp}°C
+            </div>
+            ${description}
+        `;
+    }
+
+
+    // 處理點擊事件和內容切換
     const dayTabs = document.querySelectorAll('.day-tab');
     const itineraryDays = document.querySelectorAll('.itinerary-day');
 
+    function switchDayContent(tab) {
+        const selectedDay = tab.getAttribute('data-day');
+        const selectedCity = tab.getAttribute('data-city');
+
+        // 1. 切換標籤的 'active' 樣式
+        dayTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        // 2. 切換內容區塊的顯示
+        itineraryDays.forEach(day => day.classList.remove('active'));
+        const contentToShow = document.getElementById(selectedDay);
+        if (contentToShow) {
+            contentToShow.classList.add('active');
+        }
+
+        // 3. 呼叫天氣 API
+        if (selectedCity) {
+            fetchWeather(selectedCity, `weather-${selectedDay}`);
+        }
+    }
+
+    // 監聽所有標籤的點擊事件
     dayTabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            const selectedDay = tab.getAttribute('data-day');
-
-            // 1. 切換標籤的 'active' 樣式
-            dayTabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-
-            // 2. 切換內容區塊的顯示
-            itineraryDays.forEach(day => day.classList.remove('active'));
-            const contentToShow = document.getElementById(selectedDay);
-            if (contentToShow) {
-                contentToShow.classList.add('active');
-            }
-        });
+        tab.addEventListener('click', () => switchDayContent(tab));
     });
+
+    // 網頁載入後，預設顯示 D1 的內容並獲取天氣
+    document.addEventListener('DOMContentLoaded', () => {
+        const defaultDayTab = document.querySelector('.day-tab.active');
+        if (defaultDayTab) {
+            // 只呼叫天氣 API，避免重複切換內容
+            const selectedDay = defaultDayTab.getAttribute('data-day');
+            const selectedCity = defaultDayTab.getAttribute('data-city');
+            if (selectedCity) {
+                fetchWeather(selectedCity, `weather-${selectedDay}`);
+            }
+        }
+    });
+
 </script>
 
 </body>
