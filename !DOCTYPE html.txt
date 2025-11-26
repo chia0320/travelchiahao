@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>九州六日遊規劃</title>
+    <style>
+        /* 整體排版和字體 */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* 標題樣式 */
+        .header {
+            text-align: center;
+            padding: 15px 0;
+            background-color: #4a5c9a; /* 深藍色 */
+            color: white;
+            border-radius: 10px 10px 0 0;
+            margin: -20px -20px 20px -20px; /* 佔滿頂部 */
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+
+        /* 日期導航卡片容器 (像圖中 D1, D2 那樣) */
+        .day-nav {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            margin-bottom: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .day-tab {
+            text-align: center;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            font-weight: bold;
+            color: #4a5c9a;
+        }
+
+        .day-tab.active {
+            background-color: #4a5c9a;
+            color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        /* 行程內容容器 */
+        .itinerary-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 單日標題 */
+        .day-title {
+            font-size: 1.8em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            border-left: 5px solid #ff7f50; /* 珊瑚橘色 */
+            padding-left: 10px;
+        }
+
+        /* 單一行程卡片 */
+        .activity-card {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border-left: 5px solid #4a5c9a;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .time-box {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #4a5c9a;
+            margin-right: 15px;
+            flex-shrink: 0;
+            padding-top: 5px;
+        }
+
+        .details {
+            flex-grow: 1;
+        }
+
+        .location {
+            font-weight: bold;
+            color: #333;
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .note {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>🇯🇵 九州六日冬季之旅 (D2)</h1>
+    </div>
+
+    <div class="day-nav">
+        <div class="day-tab">D1</div>
+        <div class="day-tab active">D2</div>
+        <div class="day-tab">D3</div>
+        <div class="day-tab">D4</div>
+        <div class="day-tab">D5</div>
+        <div class="day-tab">D6</div>
+    </div>
+
+    <div class="itinerary-container">
+        <div class="day-title">1 月 2 日 (星期二) - 別府 & 由布院</div>
+
+        <div class="activity-card">
+            <div class="time-box">09:00</div>
+            <div class="details">
+                <div class="location">🚗 租車手續</div>
+                <div class="note">地點：スカイレンタカー博多駅店 (Sky Rent-a-Car)</div>
+            </div>
+        </div>
+
+        <div class="activity-card">
+            <div class="time-box">11:00</div>
+            <div class="details">
+                <div class="location">🦁 九州野生動物園</div>
+                <div class="note">體驗非洲巴士或自駕遊園</div>
+            </div>
+        </div>
+
+        <div class="activity-card">
+            <div class="time-box">13:00</div>
+            <div class="details">
+                <div class="location">♨️ 別府地獄谷</div>
+                <div class="note">含：血池地獄、海地獄等參觀。隨後前往狭霧台上展望所。</div>
+            </div>
+        </div>
+
+        <div class="activity-card">
+            <div class="time-box">15:00</div>
+            <div class="details">
+                <div class="location">🛍️ 由布院散策 & 童話村</div>
+                <div class="note">在湯之坪街道逛街，參觀湯布院童話村。</div>
+            </div>
+        </div>
+
+        <div class="activity-card" style="border-left: 5px solid #ff7f50;">
+            <div class="time-box">Check-in</div>
+            <div class="details">
+                <div class="location">🏠 入住：花之湯旅館 Oyado Hananoyu</div>
+                <div class="note">⚠️ 必須在 **18:00 (6點)** 前抵達辦理入住手續。</div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
