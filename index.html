@@ -3,54 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>九州六日遊規劃</title>
+    <title>九州六日遊規劃 - 互動式</title>
     <style>
-        /* 整體排版和字體 */
+        /* 基礎樣式 (與前一段程式碼相同) */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f4f7f6;
             margin: 0;
             padding: 20px;
         }
-
-        /* 標題樣式 */
         .header {
             text-align: center;
             padding: 15px 0;
-            background-color: #4a5c9a; /* 深藍色 */
+            background-color: #4a5c9a;
             color: white;
             border-radius: 10px 10px 0 0;
-            margin: -20px -20px 20px -20px; /* 佔滿頂部 */
+            margin: -20px -20px 20px -20px;
         }
+        .header h1 { margin: 0; font-size: 1.5em; }
 
-        .header h1 {
-            margin: 0;
-            font-size: 1.5em;
-        }
-
-        /* 日期導航卡片容器 (像圖中 D1, D2 那樣) */
+        /* 日期導航卡片容器 */
         .day-nav {
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between; /* 讓卡片平均分散 */
             padding: 10px 0;
             margin-bottom: 20px;
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow-x: auto; /* 手機上可左右滑動 */
         }
-
         .day-tab {
             text-align: center;
-            padding: 8px 15px;
+            padding: 8px 10px;
+            margin: 0 5px;
             border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.3s, color 0.3s;
             font-weight: bold;
             color: #4a5c9a;
+            flex-shrink: 0; /* 防止卡片被擠壓 */
         }
-
         .day-tab.active {
-            background-color: #4a5c9a;
+            background-color: #ff7f50; /* 珊瑚橘色，當前選中的日子 */
             color: white;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
@@ -62,18 +57,22 @@
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         }
-
-        /* 單日標題 */
+        .itinerary-day {
+            /* 預設隱藏所有行程，只顯示第一個 */
+            display: none;
+        }
+        .itinerary-day.active {
+            display: block;
+        }
         .day-title {
-            font-size: 1.8em;
+            font-size: 1.4em; /* 調整字體大小以適應手機 */
             font-weight: 600;
             color: #333;
             margin-bottom: 15px;
-            border-left: 5px solid #ff7f50; /* 珊瑚橘色 */
+            border-left: 5px solid #ff7f50;
             padding-left: 10px;
         }
-
-        /* 單一行程卡片 */
+        /* 行程卡片 */
         .activity-card {
             display: flex;
             align-items: flex-start;
@@ -84,92 +83,279 @@
             border-left: 5px solid #4a5c9a;
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
-
         .time-box {
-            font-size: 1.2em;
+            font-size: 1.1em;
             font-weight: bold;
             color: #4a5c9a;
             margin-right: 15px;
             flex-shrink: 0;
             padding-top: 5px;
         }
-
-        .details {
-            flex-grow: 1;
-        }
-
+        .details { flex-grow: 1; }
         .location {
             font-weight: bold;
             color: #333;
-            font-size: 1.1em;
+            font-size: 1em;
             margin-bottom: 5px;
         }
-
-        .note {
-            font-size: 0.9em;
-            color: #666;
-            margin-top: 5px;
-        }
+        .note { font-size: 0.8em; color: #666; margin-top: 5px; }
+        .highlight { border-left: 5px solid #ff7f50; } /* 住宿/特殊提醒用不同顏色 */
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h1>🇯🇵 九州六日冬季之旅 (D2)</h1>
+        <h1>🇯🇵 九州六日冬季之旅</h1>
     </div>
 
     <div class="day-nav">
-        <div class="day-tab">D1</div>
-        <div class="day-tab active">D2</div>
-        <div class="day-tab">D3</div>
-        <div class="day-tab">D4</div>
-        <div class="day-tab">D5</div>
-        <div class="day-tab">D6</div>
+        <div class="day-tab active" data-day="D1">D1 <br> 1/1</div>
+        <div class="day-tab" data-day="D2">D2 <br> 1/2</div>
+        <div class="day-tab" data-day="D3">D3 <br> 1/3</div>
+        <div class="day-tab" data-day="D4">D4 <br> 1/4</div>
+        <div class="day-tab" data-day="D5">D5 <br> 1/5</div>
+        <div class="day-tab" data-day="D6">D6 <br> 1/6</div>
     </div>
 
     <div class="itinerary-container">
-        <div class="day-title">1 月 2 日 (星期二) - 別府 & 由布院</div>
-
-        <div class="activity-card">
-            <div class="time-box">09:00</div>
-            <div class="details">
-                <div class="location">🚗 租車手續</div>
-                <div class="note">地點：スカイレンタカー博多駅店 (Sky Rent-a-Car)</div>
+        
+        <div class="itinerary-day active" id="D1">
+            <div class="day-title">1 月 1 日 (一) - 福岡市區</div>
+            <div class="activity-card">
+                <div class="time-box">11:00</div>
+                <div class="details">
+                    <div class="location">✈️ 抵達福岡機場</div>
+                    <div class="note">從機場前往市區，辦理入住或寄放行李。</div>
+                </div>
+            </div>
+            <div class="activity-card">
+                <div class="time-box">下午</div>
+                <div class="details">
+                    <div class="location">🛍️ LaLaport 福岡</div>
+                    <div class="note">參觀商場與等比鋼彈。</div>
+                </div>
+            </div>
+            <div class="activity-card">
+                <div class="time-box">晚上</div>
+                <div class="details">
+                    <div class="location">⛲️ 博多運河城</div>
+                    <div class="note">晚餐與購物。</div>
+                </div>
+            </div>
+            <div class="activity-card highlight">
+                <div class="time-box">住</div>
+                <div class="details">
+                    <div class="location">🏨 S-Peria Hotel Hakata</div>
+                    <div class="note">含早餐。</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="itinerary-day" id="D2">
+            <div class="day-title">1 月 2 日 (二) - 別府 & 由布院</div>
+            <div class="activity-card">
+                <div class="time-box">09:00</div>
+                <div class="details">
+                    <div class="location">🚗 租車手續</div>
+                    <div class="note">地點：スカイレンタカー博多駅店</div>
+                </div>
+            </div>
+            <div class="activity-card">
+                <div class="time-box">11:00</div>
+                <div class="details">
+                    <div class="location">🦁 九州野生動物園</div>
+                    <div class="note">遊園參觀。</div>
+                </div>
+            </div>
+            <div class="activity-card">
+                <div class="time-box">13:00</div>
+                <div class="details">
+                    <div class="location">♨️ 別府地獄谷 & 狭霧台</div>
+                    <div class="note">海地獄等觀光。</div>
+                </div>
+            </div>
+            <div class="activity-card">
+                <div class="time-box">15:00</div>
+                <div class="details">
+                    <div class="location">🛍️ 由布院散策 & 童話村</div>
+                    <div class="note">湯之坪街道逛街。</div>
+                </div>
+            </div>
+            <div class="activity-card highlight">
+                <div class="time-box">住</div>
+                <div class="details">
+                    <div class="location">🏠 花之湯旅館 Oyado Hananoyu</div>
+                    <div class="note">⚠️ 6點前要Check in。</div>
+                </div>
             </div>
         </div>
 
-        <div class="activity-card">
-            <div class="time-box">11:00</div>
-            <div class="details">
-                <div class="location">🦁 九州野生動物園</div>
-                <div class="note">體驗非洲巴士或自駕遊園</div>
+        <div class="itinerary-day" id="D3">
+            <div class="day-title">1 月 3 日 (三) - 阿蘇山區</div>
+            <div class="activity-card">
+                <div class="time-box">11:00</div>
+                <div class="details">
+                    <div class="location">⛩️ 上色見熊野座神社</div>
+                    <div class="note">參觀神秘的神社。</div>
+                </div>
+            </div>
+            <div class="activity-card">
+                <div class="time-box">12:30</div>
+                <div class="details">
+                    <div class="location">🌋 阿蘇中岳火山口</div>
+                    <div class="note">視火山氣體狀況決定是否能靠近。</div>
+                </div>
+            </div>
+            <div class="activity-card">
+                <div class="time-box">14:00</div>
+                <div class="details">
+                    <div class="location">🐴 草千里之濱</div>
+                    <div class="note">廣闊的草原景觀。</div>
+                </div>
+            </div>
+            <div class="activity-card">
+                <div class="time-box">16:00</div>
+                <div class="details">
+                    <div class="location">🛒 Ebisupana Aso</div>
+                    <div class="note">採購晚餐食材。</div>
+                </div>
+            </div>
+            <div class="activity-card highlight">
+                <div class="time-box">住</div>
+                <div class="details">
+                    <div class="location">🏠 藤のヴィラ Fujino Villa</div>
+                    <div class="note">入住密碼：0325</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="itinerary-day" id="D4">
+            <div class="day-title">1 月 4 日 (四) - 高千穗</div>
+            <div class="activity-card">
+                <div class="time-box">10:00</div>
+                <div class="details">
+                    <div class="location">🚁 阿蘇山ヘリコプター遊覧飛行</div>
+                    <div class="note">直升機觀光飛行。</div>
+                </div>
+            </div>
+            <div class="activity-card">
+                <div class="time-box">14:00</div>
+                <div class="details">
+                    <div class="location">🚂 高千穗小火車</div>
+                    <div class="note">體驗廢棄鐵道改建的觀光小火車。</div>
+                </div>
+            </div>
+            <div class="activity-card">
+                <div class="time-box">15:30</div>
+                <div class="details">
+                    <div class="location">⛩️ 天安河原</div>
+                    <div class="note">傳說中的神話之地。</div>
+                </div>
+            </div>
+            <div class="activity-card highlight">
+                <div class="time-box">住</div>
+                <div class="details">
+                    <div class="location">🏨 Hotel Takachiho</div>
+                    <div class="note">含早餐與晚餐。</div>
+                </div>
             </div>
         </div>
 
-        <div class="activity-card">
-            <div class="time-box">13:00</div>
-            <div class="details">
-                <div class="location">♨️ 別府地獄谷</div>
-                <div class="note">含：血池地獄、海地獄等參觀。隨後前往狭霧台上展望所。</div>
+        <div class="itinerary-day" id="D5">
+            <div class="day-title">1 月 5 日 (五) - 返程福岡</div>
+            <div class="activity-card">
+                <div class="time-box">08:30</div>
+                <div class="details">
+                    <div class="location">🍽️ 享用早餐</div>
+                    <div class="note">8:30 前要吃完早餐。</div>
+                </div>
+            </div>
+            <div class="activity-card">
+                <div class="time-box">10:00</div>
+                <div class="details">
+                    <div class="location">🛶 高千穗划船</div>
+                    <div class="note">高千穗峽谷划船體驗 (視天氣狀況)。</div>
+                </div>
+            </div>
+            <div class="activity-card">
+                <div class="time-box">下午</div>
+                <div class="details">
+                    <div class="location">⛩️ 太宰府天滿宮</div>
+                    <div class="note">回福岡途中參觀。</div>
+                </div>
+            </div>
+            <div class="activity-card">
+                <div class="time-box">傍晚</div>
+                <div class="details">
+                    <div class="location">🛍️ 天神LOFT & 明太子麵包</div>
+                    <div class="note">在天神地區進行最後採購。</div>
+                </div>
+            </div>
+            <div class="activity-card highlight">
+                <div class="time-box">20:00</div>
+                <div class="details">
+                    <div class="location">🚗 還車</div>
+                    <div class="note">地點：スカイレンタカー博多駅店</div>
+                </div>
+            </div>
+            <div class="activity-card highlight">
+                <div class="time-box">住</div>
+                <div class="details">
+                    <div class="location">🏨 ZONK HOTEL Hakata</div>
+                    <div class="note">福岡市區住宿。</div>
+                </div>
             </div>
         </div>
-
-        <div class="activity-card">
-            <div class="time-box">15:00</div>
-            <div class="details">
-                <div class="location">🛍️ 由布院散策 & 童話村</div>
-                <div class="note">在湯之坪街道逛街，參觀湯布院童話村。</div>
+        
+        <div class="itinerary-day" id="D6">
+            <div class="day-title">1 月 6 日 (六) - 返國</div>
+            <div class="activity-card">
+                <div class="time-box">09:00</div>
+                <div class="details">
+                    <div class="location">✈️ 前往福岡機場</div>
+                    <div class="note">預留充裕時間辦理登機。</div>
+                </div>
             </div>
-        </div>
-
-        <div class="activity-card" style="border-left: 5px solid #ff7f50;">
-            <div class="time-box">Check-in</div>
-            <div class="details">
-                <div class="location">🏠 入住：花之湯旅館 Oyado Hananoyu</div>
-                <div class="note">⚠️ 必須在 **18:00 (6點)** 前抵達辦理入住手續。</div>
+            <div class="activity-card highlight">
+                <div class="time-box">11:40</div>
+                <div class="details">
+                    <div class="location">🛫 搭乘飛機</div>
+                    <div class="note">期待下次旅程！</div>
+                </div>
             </div>
         </div>
 
     </div>
+
+<script>
+    // ====================================================================
+    // JavaScript 程式碼：處理點擊事件和內容切換
+    // ====================================================================
+
+    // 取得所有的日子標籤 (D1, D2, D3...)
+    const dayTabs = document.querySelectorAll('.day-tab');
+    // 取得所有的行程內容區塊 (D1, D2, D3...)
+    const itineraryDays = document.querySelectorAll('.itinerary-day');
+
+    dayTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const selectedDay = tab.getAttribute('data-day');
+
+            // 1. 移除所有標籤的 'active' 樣式，並將點擊的標籤設定為 'active'
+            dayTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            // 2. 隱藏所有的行程內容區塊
+            itineraryDays.forEach(day => day.classList.remove('active'));
+
+            // 3. 顯示對應 ID 的行程內容區塊
+            const contentToShow = document.getElementById(selectedDay);
+            if (contentToShow) {
+                contentToShow.classList.add('active');
+            }
+        });
+    });
+</script>
+
 </body>
 </html>
