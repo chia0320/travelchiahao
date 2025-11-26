@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CHIA X HAO九州之旅 - 互動式</title>
     <style>
-        /* 基礎樣式 (與前一段程式碼相同) */
+        /* 文青配色與排版 */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
+            font-family: 'Noto Sans TC', sans-serif; /* 確保中文字體美觀 */
+            background-color: #fcfbf7; /* 柔和米白背景 */
             margin: 0;
             padding: 20px;
         }
         .header {
             text-align: center;
             padding: 15px 0;
-            background-color: #4a5c9a;
+            background-color: #7f8c8d; /* 溫暖中灰標題 */
             color: white;
             border-radius: 10px 10px 0 0;
             margin: -20px -20px 20px -20px;
@@ -25,13 +25,13 @@
         /* 日期導航卡片容器 */
         .day-nav {
             display: flex;
-            justify-content: space-between; /* 讓卡片平均分散 */
+            justify-content: space-between;
             padding: 10px 0;
             margin-bottom: 20px;
             background-color: #fff;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            overflow-x: auto; /* 手機上可左右滑動 */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            overflow-x: auto;
         }
         .day-tab {
             text-align: center;
@@ -41,11 +41,11 @@
             cursor: pointer;
             transition: background-color 0.3s, color 0.3s;
             font-weight: bold;
-            color: #4a5c9a;
-            flex-shrink: 0; /* 防止卡片被擠壓 */
+            color: #7f8c8d; /* 內建文字色 */
+            flex-shrink: 0;
         }
         .day-tab.active {
-            background-color: #ff7f50; /* 珊瑚橘色，當前選中的日子 */
+            background-color: #bca47c; /* 柔和土黃/米色 - 選中 */
             color: white;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
@@ -55,21 +55,16 @@
             background-color: white;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
         }
-        .itinerary-day {
-            /* 預設隱藏所有行程，只顯示第一個 */
-            display: none;
-        }
-        .itinerary-day.active {
-            display: block;
-        }
+        .itinerary-day { display: none; }
+        .itinerary-day.active { display: block; }
         .day-title {
-            font-size: 1.4em; /* 調整字體大小以適應手機 */
+            font-size: 1.4em;
             font-weight: 600;
-            color: #333;
+            color: #5c5c5c;
             margin-bottom: 15px;
-            border-left: 5px solid #ff7f50;
+            border-left: 5px solid #bca47c; /* 土黃色分隔線 */
             padding-left: 10px;
         }
         /* 行程卡片 */
@@ -78,15 +73,15 @@
             align-items: flex-start;
             margin-bottom: 25px;
             padding: 15px;
-            background-color: #f9f9f9;
+            background-color: #f7f5f0; /* 卡片淡米色背景 */
             border-radius: 8px;
-            border-left: 5px solid #4a5c9a;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border-left: 5px solid #7f8c8d; /* 溫暖中灰分隔線 */
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
         }
         .time-box {
             font-size: 1.1em;
             font-weight: bold;
-            color: #4a5c9a;
+            color: #5c5c5c;
             margin-right: 15px;
             flex-shrink: 0;
             padding-top: 5px;
@@ -94,12 +89,20 @@
         .details { flex-grow: 1; }
         .location {
             font-weight: bold;
-            color: #333;
+            color: #5c5c5c;
             font-size: 1em;
             margin-bottom: 5px;
         }
-        .note { font-size: 0.8em; color: #666; margin-top: 5px; }
-        .highlight { border-left: 5px solid #ff7f50; } /* 住宿/特殊提醒用不同顏色 */
+        .note { font-size: 0.8em; color: #888; margin-top: 5px; }
+        .highlight { border-left: 5px solid #bca47c; } /* 住宿/特殊提醒用土黃色 */
+        
+        /* 地圖連結樣式 */
+        .location a {
+            color: #5c5c5c; /* 讓連結顏色不要太突兀 */
+            text-decoration: none; /* 移除下劃線 */
+            border-bottom: 1px dashed #bca47c; /* 使用虛線作為文青感強調 */
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -124,21 +127,21 @@
             <div class="activity-card">
                 <div class="time-box">11:00</div>
                 <div class="details">
-                    <div class="location">✈️ 抵達福岡機場</div>
+                    <div class="location">✈️ 抵達 <a href="https://www.google.com/maps/search/?api=1&query=福岡機場" target="_blank">福岡機場</a></div>
                     <div class="note">從機場前往市區，辦理入住或寄放行李。</div>
                 </div>
             </div>
             <div class="activity-card">
                 <div class="time-box">下午</div>
                 <div class="details">
-                    <div class="location">🛍️ LaLaport 福岡</div>
+                    <div class="location">🛍️ <a href="https://www.google.com/maps/search/?api=1&query=LaLaport+福岡" target="_blank">LaLaport 福岡</a></div>
                     <div class="note">參觀商場與等比鋼彈。</div>
                 </div>
             </div>
             <div class="activity-card">
                 <div class="time-box">晚上</div>
                 <div class="details">
-                    <div class="location">⛲️ 博多運河城</div>
+                    <div class="location">⛲️ <a href="https://www.google.com/maps/search/?api=1&query=博多運河城" target="_blank">博多運河城</a></div>
                     <div class="note">晚餐與購物。</div>
                 </div>
             </div>
@@ -157,27 +160,27 @@
                 <div class="time-box">09:00</div>
                 <div class="details">
                     <div class="location">🚗 租車手續</div>
-                    <div class="note">地點：スカイレンタカー博多駅店</div>
+                    <div class="note">地點：<a href="https://www.google.com/maps/search/?api=1&query=スカイレンタカー博多駅店" target="_blank">スカイレンタカー博多駅店</a></div>
                 </div>
             </div>
             <div class="activity-card">
                 <div class="time-box">11:00</div>
                 <div class="details">
-                    <div class="location">🦁 九州野生動物園</div>
+                    <div class="location">🦁 <a href="https://www.google.com/maps/search/?api=1&query=九州野生動物園" target="_blank">九州野生動物園</a></div>
                     <div class="note">遊園參觀。</div>
                 </div>
             </div>
             <div class="activity-card">
                 <div class="time-box">13:00</div>
                 <div class="details">
-                    <div class="location">♨️ 別府地獄谷 & 狭霧台</div>
+                    <div class="location">♨️ <a href="https://www.google.com/maps/search/?api=1&query=別府地獄谷" target="_blank">別府地獄谷</a> & <a href="https://www.google.com/maps/search/?api=1&query=狭霧台上展望所" target="_blank">狭霧台</a></div>
                     <div class="note">海地獄等觀光。</div>
                 </div>
             </div>
             <div class="activity-card">
                 <div class="time-box">15:00</div>
                 <div class="details">
-                    <div class="location">🛍️ 由布院散策 & 童話村</div>
+                    <div class="location">🛍️ <a href="https://www.google.com/maps/search/?api=1&query=由布院童話村" target="_blank">由布院散策 & 童話村</a></div>
                     <div class="note">湯之坪街道逛街。</div>
                 </div>
             </div>
@@ -195,28 +198,28 @@
             <div class="activity-card">
                 <div class="time-box">11:00</div>
                 <div class="details">
-                    <div class="location">⛩️ 上色見熊野座神社</div>
+                    <div class="location">⛩️ <a href="https://www.google.com/maps/search/?api=1&query=上色見熊野座神社" target="_blank">上色見熊野座神社</a></div>
                     <div class="note">參觀神秘的神社。</div>
                 </div>
             </div>
             <div class="activity-card">
                 <div class="time-box">12:30</div>
                 <div class="details">
-                    <div class="location">🌋 阿蘇中岳火山口</div>
+                    <div class="location">🌋 <a href="https://www.google.com/maps/search/?api=1&query=阿蘇中岳火山口" target="_blank">阿蘇中岳火山口</a></div>
                     <div class="note">視火山氣體狀況決定是否能靠近。</div>
                 </div>
             </div>
             <div class="activity-card">
                 <div class="time-box">14:00</div>
                 <div class="details">
-                    <div class="location">🐴 草千里之濱</div>
+                    <div class="location">🐴 <a href="https://www.google.com/maps/search/?api=1&query=草千里之濱" target="_blank">草千里之濱</a></div>
                     <div class="note">廣闊的草原景觀。</div>
                 </div>
             </div>
             <div class="activity-card">
                 <div class="time-box">16:00</div>
                 <div class="details">
-                    <div class="location">🛒 Ebisupana Aso</div>
+                    <div class="location">🛒 <a href="https://www.google.com/maps/search/?api=1&query=Ebisupana+Aso" target="_blank">Ebisupana Aso</a></div>
                     <div class="note">採購晚餐食材。</div>
                 </div>
             </div>
@@ -234,21 +237,21 @@
             <div class="activity-card">
                 <div class="time-box">10:00</div>
                 <div class="details">
-                    <div class="location">🚁 阿蘇山ヘリコプター遊覧飛行</div>
+                    <div class="location">🚁 <a href="https://www.google.com/maps/search/?api=1&query=阿蘇山ヘリコプター遊覧飛行" target="_blank">阿蘇山直升機遊覧飛行</a></div>
                     <div class="note">直升機觀光飛行。</div>
                 </div>
             </div>
             <div class="activity-card">
                 <div class="time-box">14:00</div>
                 <div class="details">
-                    <div class="location">🚂 高千穗小火車</div>
+                    <div class="location">🚂 <a href="https://www.google.com/maps/search/?api=1&query=高千歲小火車" target="_blank">高千穗小火車</a></div>
                     <div class="note">體驗廢棄鐵道改建的觀光小火車。</div>
                 </div>
             </div>
             <div class="activity-card">
                 <div class="time-box">15:30</div>
                 <div class="details">
-                    <div class="location">⛩️ 天安河原</div>
+                    <div class="location">⛩️ <a href="https://www.google.com/maps/search/?api=1&query=天安河原" target="_blank">天安河原</a></div>
                     <div class="note">傳說中的神話之地。</div>
                 </div>
             </div>
@@ -273,21 +276,21 @@
             <div class="activity-card">
                 <div class="time-box">10:00</div>
                 <div class="details">
-                    <div class="location">🛶 高千穗划船</div>
+                    <div class="location">🛶 <a href="https://www.google.com/maps/search/?api=1&query=高千歲划船" target="_blank">高千穗划船</a></div>
                     <div class="note">高千穗峽谷划船體驗 (視天氣狀況)。</div>
                 </div>
             </div>
             <div class="activity-card">
                 <div class="time-box">下午</div>
                 <div class="details">
-                    <div class="location">⛩️ 太宰府天滿宮</div>
+                    <div class="location">⛩️ <a href="https://www.google.com/maps/search/?api=1&query=太宰府天滿宮" target="_blank">太宰府天滿宮</a></div>
                     <div class="note">回福岡途中參觀。</div>
                 </div>
             </div>
             <div class="activity-card">
                 <div class="time-box">傍晚</div>
                 <div class="details">
-                    <div class="location">🛍️ 天神LOFT & 明太子麵包</div>
+                    <div class="location">🛍️ <a href="https://www.google.com/maps/search/?api=1&query=天神LOFT" target="_blank">天神LOFT</a> & 買明太子麵包</div>
                     <div class="note">在天神地區進行最後採購。</div>
                 </div>
             </div>
@@ -295,7 +298,7 @@
                 <div class="time-box">20:00</div>
                 <div class="details">
                     <div class="location">🚗 還車</div>
-                    <div class="note">地點：スカイレンタカー博多駅店</div>
+                    <div class="note">地點：<a href="https://www.google.com/maps/search/?api=1&query=スカイレンタカー博多駅店" target="_blank">スカイレンタカー博多駅店</a></div>
                 </div>
             </div>
             <div class="activity-card highlight">
@@ -312,7 +315,7 @@
             <div class="activity-card">
                 <div class="time-box">09:00</div>
                 <div class="details">
-                    <div class="location">✈️ 前往福岡機場</div>
+                    <div class="location">✈️ 前往 <a href="https://www.google.com/maps/search/?api=1&query=福岡機場" target="_blank">福岡機場</a></div>
                     <div class="note">預留充裕時間辦理登機。</div>
                 </div>
             </div>
@@ -328,27 +331,20 @@
     </div>
 
 <script>
-    // ====================================================================
     // JavaScript 程式碼：處理點擊事件和內容切換
-    // ====================================================================
-
-    // 取得所有的日子標籤 (D1, D2, D3...)
     const dayTabs = document.querySelectorAll('.day-tab');
-    // 取得所有的行程內容區塊 (D1, D2, D3...)
     const itineraryDays = document.querySelectorAll('.itinerary-day');
 
     dayTabs.forEach(tab => {
         tab.addEventListener('click', () => {
             const selectedDay = tab.getAttribute('data-day');
 
-            // 1. 移除所有標籤的 'active' 樣式，並將點擊的標籤設定為 'active'
+            // 1. 切換標籤的 'active' 樣式
             dayTabs.forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
 
-            // 2. 隱藏所有的行程內容區塊
+            // 2. 切換內容區塊的顯示
             itineraryDays.forEach(day => day.classList.remove('active'));
-
-            // 3. 顯示對應 ID 的行程內容區塊
             const contentToShow = document.getElementById(selectedDay);
             if (contentToShow) {
                 contentToShow.classList.add('active');
@@ -359,4 +355,3 @@
 
 </body>
 </html>
-
