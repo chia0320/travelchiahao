@@ -6,7 +6,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>CHIA X HAO九州之旅 - 互動式 (V6.1 修正版)</title>
+    <title>CHIA X HAO九州之旅 - 互動式 (V7.0 費用功能優化)</title>
     <style>
         /* 文青配色與排版 */
         body {
@@ -177,6 +177,15 @@
             cursor: pointer;
             min-height: 20px;
         }
+        /* 讓下拉選單在表格內對齊 */
+        .category-select {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #bca47c;
+            border-radius: 4px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
         .delete-btn {
             background: none;
             border: none;
@@ -189,6 +198,18 @@
         }
         .delete-btn:hover {
             opacity: 1;
+        }
+        .currency-control {
+            margin-bottom: 15px;
+            font-weight: bold;
+            color: #5c5c5c;
+        }
+        .currency-select {
+            padding: 8px;
+            border: 1px solid #bca47c;
+            border-radius: 4px;
+            background-color: white;
+            margin-left: 10px;
         }
     </style>
 </head>
@@ -490,42 +511,29 @@
                 <div class="weather-box"></div>
             </div>
 
+            <div class="currency-control">
+                總計幣別：
+                <select id="currency-select" class="currency-select" onchange="updateTotal()">
+                    <option value="JPY">日幣 (¥)</option>
+                    <option value="TWD">台幣 (NTD)</option>
+                </select>
+                <span style="font-size: 0.8em; color: #a0a0a0;"> (單筆金額請統一輸入日幣)</span>
+            </div>
+
             <table id="expense-table" style="width:100%; border-collapse: collapse;">
                 <thead>
                     <tr style="background-color: #7f8c8d; color: white;">
-                        <td style="width:10%;">日期</td>
                         <td style="width:25%;">類別</td>
-                        <td style="width:35%;">項目說明</td>
+                        <td style="width:45%;">項目說明</td>
                         <td style="width:20%; text-align: right;">日幣 (¥)</td>
                         <td style="width:10%;">操作</td>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr data-id="E1">
-                        <td class="expense-editable" data-field="date">1/1</td>
-                        <td class="expense-editable" data-field="category">住宿</td>
-                        <td class="expense-editable" data-field="description">S-Peria Hotel Hakata</td>
-                        <td class="expense-editable" data-field="amount" style="text-align: right;">15,000</td>
-                        <td><button class="delete-btn" onclick="deleteExpense('E1')">❌</button></td>
-                    </tr>
-                    <tr data-id="E2">
-                        <td class="expense-editable" data-field="date">1/1</td>
-                        <td class="expense-editable" data-field="category">交通</td>
-                        <td class="expense-editable" data-field="description">租車費用 (3日)</td>
-                        <td class="expense-editable" data-field="amount" style="text-align: right;">12,000</td>
-                        <td><button class="delete-btn" onclick="deleteExpense('E2')">❌</button></td>
-                    </tr>
-                    <tr data-id="E3">
-                        <td class="expense-editable" data-field="date">1/2</td>
-                        <td class="expense-editable" data-field="category">門票</td>
-                        <td class="expense-editable" data-field="description">九州野生動物園</td>
-                        <td class="expense-editable" data-field="amount" style="text-align: right;">5,000</td>
-                        <td><button class="delete-btn" onclick="deleteExpense('E3')">❌</button></td>
-                    </tr>
-                </tbody>
+                    </tbody>
                 <tfoot>
                     <tr>
-                        <td colspan="3" style="text-align: right; font-weight: bold; background-color: #f7f5f0;">總計 (¥)：</td>
+                        <td colspan="2" style="text-align: right; font-weight: bold; background-color: #f7f5f0;">總計 (<span id="currency-symbol">¥</span>)：</td>
                         <td id="total-expense" style="text-align: right; font-weight: bold; background-color: #f7f5f0;">0</td>
                         <td></td>
                     </tr>
@@ -544,6 +552,9 @@
         // ------------------------------------
         // JavaScript for Interactivity
         // ------------------------------------
+        
+        // 匯率設定：1 台幣 (NTD) 兌換 X 日圓 (¥)
+        const TWD_TO_JPY_RATE = 4.7; 
 
         // 1. Tab Switching Logic
         const dayTabs = document.querySelectorAll('.day-tab');
@@ -596,30 +607,8 @@
                 const saveChanges = () => {
                     let newValue = input.value.trim();
                     
-                    // Restore links if they exist
-                    if (contentHTML.includes('<a')) {
-                        
-                        if (this.classList.contains('location')) {
-                            // Find the <a> tag
-                            const aTagMatch = contentHTML.match(/<a\s+href="([^"]*)"[^>]*>(.*?)<\/a>/i);
-                            if (aTagMatch) {
-                                // Extract the existing link URL and link text
-                                const linkUrl = aTagMatch[1];
-                                const originalLinkText = aTagMatch[2];
-                                
-                                // Simple approach: assume the new value should be displayed outside the link, 
-                                // but this is complex without knowing user's intent.
-                                // For simplicity, we just replace the entire content and the user must re-add the link.
-                                this.innerHTML = newValue; 
-                            } else {
-                                this.innerHTML = newValue;
-                            }
-                        } else {
-                            this.innerHTML = newValue;
-                        }
-                    } else {
-                        this.textContent = newValue;
-                    }
+                    // Simple replacement, requires user to re-add link structure if needed
+                    this.innerHTML = newValue;
                     
                     // Remove the input field and show the div
                     input.parentNode.removeChild(input);
@@ -643,6 +632,10 @@
         let expenseCounter = 4; // Start counter after the provided examples
         const expenseTableBody = document.querySelector('#expense-table tbody');
         const totalExpenseFoot = document.getElementById('total-expense');
+        const currencySelect = document.getElementById('currency-select');
+        const currencySymbolSpan = document.getElementById('currency-symbol');
+        const categoryOptions = ['住宿', '景點', '餐廳', '購物', '交通', '其他'];
+
 
         // Load expenses from local storage (if any)
         function loadExpenses() {
@@ -650,7 +643,7 @@
             expenseTableBody.innerHTML = '';
             
             expenses.forEach(item => {
-                appendExpenseRow(item.date, item.category, item.description, item.amount, item.id);
+                appendExpenseRow(item.category, item.description, item.amount, item.id);
                 // Keep the counter updated
                 if (parseInt(item.id.substring(1)) >= expenseCounter) {
                     expenseCounter = parseInt(item.id.substring(1)) + 1;
@@ -661,11 +654,11 @@
         }
 
         function getInitialExpenses() {
-             // Hardcoded initial data
+             // Hardcoded initial data, removed 'date' field
             return [
-                { id: 'E1', date: '1/1', category: '住宿', description: 'S-Peria Hotel Hakata', amount: '15,000' },
-                { id: 'E2', date: '1/1', category: '交通', description: '租車費用 (3日)', amount: '12,000' },
-                { id: 'E3', date: '1/2', category: '門票', description: '九州野生動物園', amount: '5,000' }
+                { id: 'E1', category: '住宿', description: 'S-Peria Hotel Hakata (1晚)', amount: '15,000' },
+                { id: 'E2', category: '交通', description: '租車費用 (3日)', amount: '12,000' },
+                { id: 'E3', category: '景點', description: '九州野生動物園門票', amount: '5,000' }
             ];
         }
 
@@ -676,8 +669,10 @@
             rows.forEach(row => {
                 expenses.push({
                     id: row.getAttribute('data-id'),
-                    date: row.querySelector('[data-field="date"]').textContent.trim(),
-                    category: row.querySelector('[data-field="category"]').textContent.trim(),
+                    // For category: if it's a select, get the value. If it's a td (after editing), get textContent.
+                    category: row.querySelector('[data-field="category"]').tagName === 'SELECT' ? 
+                              row.querySelector('[data-field="category"]').value :
+                              row.querySelector('[data-field="category"]').textContent.trim(),
                     description: row.querySelector('[data-field="description"]').textContent.trim(),
                     amount: row.querySelector('[data-field="amount"]').textContent.trim(),
                 });
@@ -685,24 +680,56 @@
             localStorage.setItem('travelchiahaho_expenses', JSON.stringify(expenses));
             updateTotal();
         }
+        
+        // Helper to create category select element
+        function createCategorySelect(selectedValue = '其他') {
+            const select = document.createElement('select');
+            select.className = 'category-select';
+            select.setAttribute('data-field', 'category');
+            
+            categoryOptions.forEach(optionText => {
+                const option = document.createElement('option');
+                option.value = optionText;
+                option.textContent = optionText;
+                if (optionText === selectedValue) {
+                    option.selected = true;
+                }
+                select.appendChild(option);
+            });
 
-        // Add a new expense row
-        function appendExpenseRow(date, category, description, amount, id) {
-             const newRow = document.createElement('tr');
+            // Add event listener to save changes immediately on change
+            select.addEventListener('change', saveExpenses); 
+            
+            return select;
+        }
+
+
+        // Add a new expense row (removed date argument)
+        function appendExpenseRow(category, description, amount, id) {
+            const newRow = document.createElement('tr');
             newRow.setAttribute('data-id', id);
+            
+            // Create the category cell with the select element
+            const categoryCell = document.createElement('td');
+            categoryCell.appendChild(createCategorySelect(category));
+            
             newRow.innerHTML = `
-                <td class="expense-editable" data-field="date">${date}</td>
-                <td class="expense-editable" data-field="category">${category}</td>
+                ${categoryCell.outerHTML}
                 <td class="expense-editable" data-field="description">${description}</td>
                 <td class="expense-editable" data-field="amount" style="text-align: right;">${amount}</td>
                 <td><button class="delete-btn" onclick="deleteExpense('${id}')">❌</button></td>
             `;
+            // Manually replace the generated td HTML with the actual select element
+            newRow.querySelector('td:first-child').innerHTML = '';
+            newRow.querySelector('td:first-child').appendChild(createCategorySelect(category));
+
             expenseTableBody.appendChild(newRow);
         }
 
         window.addExpense = function() {
             const newId = 'E' + expenseCounter++;
-            appendExpenseRow('', '', '', '0', newId);
+            // Default to '餐廳' for a new row
+            appendExpenseRow('餐廳', '新增項目', '0', newId);
             saveExpenses();
             makeExpensesEditable(); // Make the new row editable
         }
@@ -715,37 +742,63 @@
             }
         }
 
-        function updateTotal() {
+        window.updateTotal = function() {
             const amountCells = expenseTableBody.querySelectorAll('[data-field="amount"]');
-            let total = 0;
+            let totalJPY = 0;
             amountCells.forEach(cell => {
-                // Remove commas before parsing
-                const amount = parseFloat(cell.textContent.replace(/,/g, ''));
-                if (!isNaN(amount)) {
-                    total += amount;
+                // Get the hidden original JPY value (stored in data attribute) or from content (if new entry)
+                const jpyValue = parseFloat(cell.getAttribute('data-jpy') || cell.textContent.replace(/,/g, ''));
+                if (!isNaN(jpyValue)) {
+                    totalJPY += jpyValue;
                 }
             });
-            // Format total with commas
-            totalExpenseFoot.textContent = total.toLocaleString('en-US'); 
+            
+            const selectedCurrency = currencySelect.value;
+            let totalDisplay = 0;
+            let symbol = '';
+
+            if (selectedCurrency === 'TWD') {
+                // Convert JPY total to TWD (JPY / Rate)
+                totalDisplay = totalJPY / TWD_TO_JPY_RATE;
+                symbol = 'NTD';
+            } else { // JPY
+                totalDisplay = totalJPY;
+                symbol = '¥';
+            }
+
+            currencySymbolSpan.textContent = symbol;
+            
+            // Format total with commas and appropriate decimal places
+            totalExpenseFoot.textContent = totalDisplay.toLocaleString('en-US', {
+                maximumFractionDigits: selectedCurrency === 'TWD' ? 0 : 0
+            }); 
         }
 
         function makeExpensesEditable() {
-            document.querySelectorAll('.expense-editable').forEach(element => {
+            // Make Description and Amount editable
+            document.querySelectorAll('.expense-editable[data-field="description"], .expense-editable[data-field="amount"]').forEach(element => {
                 element.removeEventListener('click', handleExpenseEdit); // Remove old listener first
                 element.addEventListener('click', handleExpenseEdit);
+            });
+            
+            // Re-attach change listeners to all category selects (for consistency)
+            document.querySelectorAll('.category-select').forEach(select => {
+                select.removeEventListener('change', saveExpenses);
+                select.addEventListener('change', saveExpenses);
             });
         }
 
         function handleExpenseEdit() {
             const originalElement = this;
-            const originalText = this.textContent.trim();
+            const field = originalElement.getAttribute('data-field');
+            const originalText = originalElement.getAttribute('data-jpy') || originalElement.textContent.trim(); // Use hidden JPY value if available
 
             const input = document.createElement('input');
             input.type = 'text';
             input.className = 'editable-input';
             input.value = originalText;
             input.style.width = '100%';
-            input.style.textAlign = originalElement.getAttribute('data-field') === 'amount' ? 'right' : 'left';
+            input.style.textAlign = field === 'amount' ? 'right' : 'left';
             input.style.padding = '0';
             input.style.border = 'none';
             input.style.margin = '0';
@@ -758,14 +811,22 @@
             const saveChanges = () => {
                 let newValue = input.value.trim();
 
-                // For amount field, strip non-digits/commas and format
-                if (originalElement.getAttribute('data-field') === 'amount') {
+                if (field === 'amount') {
+                    // For amount field, strip non-digits/commas
                     const cleanValue = newValue.replace(/[^0-9.]/g, '');
                     const numberValue = parseFloat(cleanValue);
+                    
                     if (!isNaN(numberValue)) {
+                        // Store clean JPY value in a hidden attribute
+                        originalElement.setAttribute('data-jpy', numberValue);
+                        // Display value formatted with commas
                         newValue = numberValue.toLocaleString('en-US', {maximumFractionDigits: 0});
                     } else {
-                        newValue = '0'; // Default to 0 if invalid input
+                        // If invalid input, use the stored JPY value or 0
+                        const storedJpy = originalElement.getAttribute('data-jpy') || '0';
+                        const storedNum = parseFloat(storedJpy);
+                        originalElement.setAttribute('data-jpy', storedNum);
+                        newValue = storedNum.toLocaleString('en-US', {maximumFractionDigits: 0});
                     }
                 }
                 
@@ -799,6 +860,19 @@
             }
             loadExpenses();
             makeExpensesEditable();
+            
+            // Manually set initial data-jpy attributes on load for consistency
+            document.querySelectorAll('[data-field="amount"]').forEach(cell => {
+                if (!cell.getAttribute('data-jpy')) {
+                    const jpyValue = parseFloat(cell.textContent.replace(/,/g, ''));
+                    if (!isNaN(jpyValue)) {
+                        cell.setAttribute('data-jpy', jpyValue);
+                    } else {
+                         cell.setAttribute('data-jpy', 0);
+                    }
+                }
+            });
+            updateTotal(); // Ensure total is calculated correctly on load
         });
 
     </script>
