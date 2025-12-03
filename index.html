@@ -218,7 +218,7 @@
             <div class="activity-card highlight" data-id="D1A5">
                 <div class="time-box editable" data-field="time">住</div>
                 <div class="details">
-                    <div class="location editable" data-field="location">🏨 S-Peria Hotel Hakata</div>
+                    <div class="location editable" data-field="location">🏨 <a href="http://googleusercontent.com/maps.google.com/search?q=S-Peria+Hotel+Hakata" target="_blank">S-Peria Hotel Hakata</a></div>
                     <div class="description-text editable" data-field="desc">地點位於博多，方便隔日出發。</div>
                     <div class="note editable" data-field="note">含早餐。</div>
                 </div>
@@ -265,7 +265,7 @@
             <div class="activity-card highlight" data-id="D2A5">
                 <div class="time-box editable" data-field="time">住</div>
                 <div class="details">
-                    <div class="location editable" data-field="location">🏠 花之湯旅館 Oyado Hananoyu</div>
+                    <div class="location editable" data-field="location">🏠 <a href="http://googleusercontent.com/maps.google.com/search?q=Oyado+Hananoyu+Yufuin" target="_blank">花之湯旅館 Oyado Hananoyu</a></div>
                     <div class="description-text editable" data-field="desc">享受日式溫泉旅館。</div>
                     <div class="note editable" data-field="note">⚠️ **6點前要Check in**。</div>
                 </div>
@@ -312,7 +312,7 @@
             <div class="activity-card highlight" data-id="D3A5">
                 <div class="time-box editable" data-field="time">住</div>
                 <div class="details">
-                    <div class="location editable" data-field="location">🏠 藤のヴィラ Fujino Villa</div>
+                    <div class="location editable" data-field="location">🏠 <a href="http://googleusercontent.com/maps.google.com/search?q=Fujino+Villa+Aso" target="_blank">藤のヴィラ Fujino Villa</a></div>
                     <div class="description-text editable" data-field="desc">阿蘇山區的特色別墅，可自行烹煮晚餐。</div>
                     <div class="note editable" data-field="note">入住密碼：**0325**</div>
                 </div>
@@ -351,7 +351,7 @@
             <div class="activity-card highlight" data-id="D4A4">
                 <div class="time-box editable" data-field="time">住</div>
                 <div class="details">
-                    <div class="location editable" data-field="location">🏨 Hotel Takachiho</div>
+                    <div class="location editable" data-field="location">🏨 <a href="http://googleusercontent.com/maps.google.com/search?q=Hotel+Takachiho" target="_blank">Hotel Takachiho</a></div>
                     <div class="description-text editable" data-field="desc">位於高千穗地區，方便隔天清早前往划船。</div>
                     <div class="note editable" data-field="note">含早餐與晚餐。</div>
                 </div>
@@ -406,7 +406,7 @@
             <div class="activity-card highlight" data-id="D5A6">
                 <div class="time-box editable" data-field="time">住</div>
                 <div class="details">
-                    <div class="location editable" data-field="location">🏨 ZONK HOTEL Hakata</div>
+                    <div class="location editable" data-field="location">🏨 <a href="http://googleusercontent.com/maps.google.com/search?q=ZONK+HOTEL+Hakata" target="_blank">ZONK HOTEL Hakata</a></div>
                     <div class="description-text editable" data-field="desc">回到福岡市區的住宿點，方便隔天前往機場。</div>
                     <div class="note editable" data-field="note">福岡市區住宿。</div>
                 </div>
@@ -454,22 +454,9 @@
             const key = `${cardId}-${field}`;
             
             if (itineraryData[key]) {
-                // 檢查是否包含地圖連結，如果是，則僅替換純文字部分
-                if (element.querySelector('a')) {
-                    const originalHTML = element.innerHTML;
-                    // 假設連結都在最前面或後面，我們只替換非連結的文字
-                    // 這是簡化處理，複雜的 HTML 結構需要更精確的解析
-                    if (field === 'location') {
-                        // 嘗試保留地圖連結
-                        const mapLink = element.querySelector('a').outerHTML;
-                        // 確保文字在前，連結在後
-                        element.innerHTML = `${itineraryData[key].replace(/<a.*?>.*?<\/a>/i, '')} ${mapLink}`;
-                    } else {
-                        element.innerHTML = itineraryData[key];
-                    }
-                } else {
-                    element.innerHTML = itineraryData[key];
-                }
+                // 檢查是否包含地圖連結，如果是，則使用 Local Storage 儲存的完整 HTML
+                // 這邊我們直接替換整個 innerHTML，因為 saveEdit 儲存的就是包含連結的完整 HTML 字符串
+                element.innerHTML = itineraryData[key];
             }
         });
     }
@@ -487,25 +474,41 @@
 
     // 3. 處理點擊變成輸入框的邏輯
     editableElements.forEach(element => {
-        element.addEventListener('click', function(event) {
+        // 為了確保事件只綁定一次，我們使用一個具名函數並檢查是否已綁定
+        const clickHandler = function(event) {
             // 阻止點擊地圖連結時也觸發編輯
             if (event.target.tagName === 'A') {
                 return;
             }
             
+            // 移除 click 監聽器以防止在編輯狀態下重複觸發
+            this.removeEventListener('click', clickHandler);
+
             const originalValue = this.innerHTML;
-            const cardId = this.closest('.activity-card').getAttribute('data-id');
             const field = this.getAttribute('data-field');
 
             // 創建輸入框
-            const input = document.createElement('input');
-            input.type = 'text';
+            const input = document.createElement(field === 'note' || field === 'desc' ? 'textarea' : 'input');
+            if (field !== 'note' && field !== 'desc') {
+                 input.type = 'text';
+            }
             input.className = 'editable-input';
-            input.value = originalValue.trim();
             
-            // 如果是備註欄，用 textarea 比較方便輸入多行
+            // 移除地圖連結，只編輯純文字內容
+            let textToEdit = originalValue;
+            let mapLinkHTML = '';
+            
+            if (field === 'location') {
+                const linkMatch = originalValue.match(/<a.*?<\/a>/i);
+                if (linkMatch) {
+                    mapLinkHTML = linkMatch[0]; // 提取連結 HTML
+                    // 從原始值中移除連結，只留下文字部分進行編輯
+                    textToEdit = originalValue.replace(mapLinkHTML, '').trim(); 
+                }
+            }
+            input.value = textToEdit;
+            
             if (field === 'note' || field === 'desc') {
-                input.tagName = 'textarea';
                 input.style.height = '50px';
             }
 
@@ -515,16 +518,13 @@
 
             // 處理儲存邏輯 (按下 Enter 或失去焦點)
             const finalizeEdit = () => {
-                const newValue = input.value.trim() || originalValue; 
+                const newValue = input.value.trim() || textToEdit; 
                 
-                // 如果是 location 欄位，要確保連結被保留
+                // 重建 HTML 內容
                 let finalHTML = newValue;
-                if (field === 'location' && originalValue.includes('<a')) {
-                    // 嘗試從原始值中提取連結部分並重新插入
-                    const mapLinkMatch = originalValue.match(/<a.*?<\/a>/i);
-                    if (mapLinkMatch) {
-                        finalHTML = newValue.replace(/<a.*?>.*?<\/a>/i, '') + ' ' + mapLinkMatch[0];
-                    }
+                if (field === 'location' && mapLinkHTML) {
+                    // 將連結重新加回去
+                    finalHTML = newValue + ' ' + mapLinkHTML;
                 }
 
                 const newElement = document.createElement('div');
@@ -536,19 +536,22 @@
                 saveEdit(newElement, finalHTML);
                 
                 // 重新綁定事件
-                newElement.addEventListener('click', arguments.callee); 
+                newElement.addEventListener('click', clickHandler); 
             };
             
             // 失去焦點時儲存
             input.addEventListener('blur', finalizeEdit);
             
-            // 按下 Enter 時儲存
-            input.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    finalizeEdit();
-                }
-            });
-        });
+            // 按下 Enter 時儲存 (textarea 則不響應 Enter)
+            if (field !== 'note' && field !== 'desc') {
+                 input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        finalizeEdit();
+                    }
+                });
+            }
+        };
+        element.addEventListener('click', clickHandler);
     });
 
 
