@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CHIA X HAO九州之旅 - 互動式 (可編輯/飯店連結修正)</title>
+    <title>CHIA X HAO九州之旅 - 互動式 (最終版)</title>
     <style>
         /* 文青配色與排版 */
         body {
@@ -160,6 +160,33 @@
             border-bottom: 1px dashed #bca47c;
             cursor: pointer;
         }
+
+        /* 費用紀錄表格樣式 */
+        #expense-table td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            vertical-align: middle;
+        }
+        #expense-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .expense-editable {
+            cursor: pointer;
+            min-height: 20px;
+        }
+        .delete-btn {
+            background: none;
+            border: none;
+            color: red;
+            cursor: pointer;
+            font-weight: bold;
+            padding: 0;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        .delete-btn:hover {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -175,6 +202,7 @@
         <div class="day-tab" data-day="D4" data-city="Takachiho, JP">D4 <br> 1/4</div>
         <div class="day-tab" data-day="D5" data-city="Fukuoka, JP">D5 <br> 1/5</div>
         <div class="day-tab" data-day="D6" data-city="Fukuoka, JP">D6 <br> 1/6</div>
+        <div class="day-tab" data-day="D7">💸 <br> 花費</div>
     </div>
 
     <div class="itinerary-container">
@@ -197,7 +225,7 @@
                 <div class="details">
                     <div class="location editable" data-field="location">🚗 租車手續（機場取車）</div>
                     <div class="description-text editable" data-field="desc">在機場租車點辦理手續，準備展開自駕之旅。</div>
-                    <div class="note editable" data-field="note">地點：<a href="https://www.google.com/maps/search/?api=1&query=三菱レンタカー+ユナイテッドレンタカー福岡空港店" target="_blank">三菱レンタカー/ユナイテッドレンタカー福岡空港店</a></div>
+                    <div class="note editable" data-field="note">地點：<a href="https://www.google.com/maps/search/?api=1&query=三菱レンタカー+ユナイテッドレンタカー福岡空港店" target="_blank">三菱レンタカー/ユナイテッドレンタカー福岡空港店</a> (A3出口 14號公車牌)</div>
                 </div>
             </div>
             <div class="activity-card" data-id="D1A3">
@@ -328,7 +356,7 @@
             <div class="activity-card" data-id="D4A1">
                 <div class="time-box editable" data-field="time">10:00</div>
                 <div class="details">
-                    <div class="location editable" data-field="location">🚁 <a href="https://www.google.com/maps/search/?api=1&query=阿蘇山直升機遊覧飛行" target="_blank">阿蘇山直升機遊覧飛行</a></div>
+                    <div class="location editable" data-field="location">🚁 <a href="https://www.google.com/maps/search/?api=1&query=阿蘇山直升機遊覧飛行" target="_blank">阿蘇山ヘリコプター遊覧飛行</a></div>
                     <div class="description-text editable" data-field="desc">從空中俯瞰阿蘇火山口、草千里之濱的壯麗景觀，視天氣狀況而定。</div>
                     <div class="note editable" data-field="note">直升機觀光飛行。</div>
                 </div>
@@ -354,7 +382,7 @@
                 <div class="details">
                     <div class="location editable" data-field="location">🏨 <a href="https://www.google.com/maps/search/?api=1&query=Hotel+Takachiho" target="_blank">Hotel Takachiho</a></div>
                     <div class="description-text editable" data-field="desc">位於高千穗地區，方便隔天清早前往划船。</div>
-                    <div class="note editable" data-field="note">含早餐與晚餐。</div>
+                    <div class="note editable" data-field="note">含早餐。</div>
                 </div>
             </div>
         </div>
@@ -396,11 +424,20 @@
                     <div class="note editable" data-field="note">在天神地區進行最後採購。</div>
                 </div>
             </div>
-            <div class="activity-card highlight" data-id="D5A5"> <div class="time-box editable" data-field="time">住</div>
+            <div class="activity-card highlight" data-id="D5A5">
+                <div class="time-box editable" data-field="time">19:00</div>
                 <div class="details">
-                    <div class="location editable" data-field="location">🏨 <a href="https://www.google.com/maps/search/?api=1&query=ZONK+HOTEL+Hakata" target="_blank">ZONK HOTEL Hakata</a></div>
-                    <div class="description-text editable" data-field="desc">回到福岡市區的住宿點，方便隔天前往機場。</div>
-                    <div class="note editable" data-field="note">福岡市區住宿。</div>
+                    <div class="location editable" data-field="location">🥩 <a href="http://googleusercontent.com/maps.google.com/search?q=焼肉Nikuichi+Yakuin+Store" target="_blank">燒肉 Nikuichi (Yakuin Store)</a> (已訂位)</div>
+                    <div class="description-text editable" data-field="desc">高品質的博多和牛燒肉店，非常受歡迎。</div>
+                    <div class="note editable" data-field="note">務必準時。</div>
+                </div>
+            </div>
+            <div class="activity-card highlight" data-id="D5A6">
+                <div class="time-box editable" data-field="time">住</div>
+                <div class="details">
+                    <div class="location editable" data-field="location">🏨 <a href="http://googleusercontent.com/maps.google.com/search?q=Quintessa+Hotel+Fukuoka+Tenjin+Minami" target="_blank">Quintessa Hotel Fukuoka Tenjin Minami</a></div>
+                    <div class="description-text editable" data-field="desc">福岡市區住宿點，位於天神南區。</div>
+                    <div class="note editable" data-field="note"></div>
                 </div>
             </div>
         </div>
@@ -411,21 +448,23 @@
                 <div class="weather-box" id="weather-D6"></div>
             </div>
             <div class="activity-card highlight" data-id="D6A1">
-                <div class="time-box editable" data-field="time">08:40</div>
+                <div class="time-box editable" data-field="time">08:30</div>
                 <div class="details">
                     <div class="location editable" data-field="location">🚗 還車 (機場店)</div>
                     <div class="description-text editable" data-field="desc">將租賃車輛歸還給機場租車點。</div>
                     <div class="note editable" data-field="note">地點：<a href="https://www.google.com/maps/search/?api=1&query=三菱レンタカー+ユナイテッドレンタカー福岡空港店" target="_blank">三菱レンタカー/ユナイテッドレンタカー福岡空港店</a></div>
                 </div>
             </div>
-            <div class="activity-card" data-id="D6A2"> <div class="time-box editable" data-field="time">09:00</div>
+            <div class="activity-card" data-id="D6A2">
+                <div class="time-box editable" data-field="time">09:00</div>
                 <div class="details">
                     <div class="location editable" data-field="location">✈️ 前往 <a href="https://www.google.com/maps/search/?api=1&query=Fukuoka+Airport" target="_blank">福岡機場</a></div>
                     <div class="description-text editable" data-field="desc">從租車點搭乘接駁車前往國際線航廈或國內線航廈。</div>
                     <div class="note editable" data-field="note">辦理登機手續。</div>
                 </div>
             </div>
-            <div class="activity-card highlight" data-id="D6A3"> <div class="time-box editable" data-field="time">11:40</div>
+            <div class="activity-card highlight" data-id="D6A3">
+                <div class="time-box editable" data-field="time">11:40</div>
                 <div class="details">
                     <div class="location editable" data-field="location">🛫 搭乘飛機</div>
                     <div class="description-text editable" data-field="desc">準備搭乘班機回國。</div>
@@ -434,54 +473,82 @@
             </div>
         </div>
 
-    </div>
+        <div class="itinerary-day" id="D7">
+            <div class="day-header">
+                <div class="day-title">💸 花費紀錄 (日幣 ¥)</div>
+                <button id="add-expense-btn" style="padding: 8px 15px; background-color: #bca47c; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">+ 新增花費</button>
+            </div>
+            
+            <table id="expense-table" style="width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.9em;">
+                <thead>
+                    <tr style="background-color: #7f8c8d; color: white;">
+                        <th style="padding: 10px; text-align: left; width: 15%;">日期</th>
+                        <th style="padding: 10px; text-align: left; width: 30%;">項目 (內容)</th>
+                        <th style="padding: 10px; text-align: left; width: 15%;">類別</th>
+                        <th style="padding: 10px; text-align: right; width: 20%;">金額 (¥)</th>
+                        <th style="padding: 10px; text-align: left; width: 15%;">備註</th>
+                        <th style="padding: 10px; width: 5%;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+                <tfoot>
+                    <tr style="background-color: #f7f5f0; font-weight: bold; border-top: 2px solid #7f8c8d;">
+                        <td colspan="3" style="padding: 10px; text-align: right;">總計:</td>
+                        <td id="total-expense" style="padding: 10px; text-align: right; color: #bca47c;">¥ 0</td>
+                        <td colspan="2"></td>
+                    </tr>
+                </tfoot>
+            </table>
+            <p style="font-size: 0.8em; color: #888; margin-top: 10px;">點擊表格欄位即可編輯內容。</p>
+        </div>
+        </div>
 
 <script>
     // ====================================================================
-    // 編輯與本地儲存功能 JavaScript (維持上次的修正邏輯)
+    // 編輯與本地儲存功能 JavaScript 
     // ====================================================================
-    const STORAGE_KEY = 'chiaxhao_itinerary_edits';
+    const ITINERARY_STORAGE_KEY = 'chiaxhao_itinerary_edits';
+    const EXPENSE_STORAGE_KEY = 'chiaxhao_expense_records';
     const editableElements = document.querySelectorAll('.editable');
     
-    // 特別處理：如果 Local Storage 存在但內容是舊的，我們將它清空，強制載入新的 HTML 內容。
-    // 將版本號更新為 v1.2 以確保清除舊的本地儲存，從而載入最新的還車調整。
-    const LATEST_VERSION_MARKER = 'v1.2_car_return_moved';
+    // 將版本號更新為 v1.4，確保清除舊的本地儲存，從而載入最新的行程結構和花費功能。
+    const LATEST_VERSION_MARKER = 'v1.4_expense_tab';
     if (localStorage.getItem('itinerary_version') !== LATEST_VERSION_MARKER) {
-        localStorage.removeItem(STORAGE_KEY);
+        localStorage.removeItem(ITINERARY_STORAGE_KEY);
+        localStorage.removeItem(EXPENSE_STORAGE_KEY); // 清除舊的花費資料
         localStorage.setItem('itinerary_version', LATEST_VERSION_MARKER);
     }
     
-    const itineraryData = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+    const itineraryData = JSON.parse(localStorage.getItem(ITINERARY_STORAGE_KEY) || '{}');
+    let expenseRecords = JSON.parse(localStorage.getItem(EXPENSE_STORAGE_KEY) || '[]');
 
-    // 1. 載入本地儲存的資料並更新網頁
-    function loadEdits() {
+    // 1. 載入行程本地儲存的資料並更新網頁
+    function loadItineraryEdits() {
         editableElements.forEach(element => {
             const cardId = element.closest('.activity-card').getAttribute('data-id');
             const field = element.getAttribute('data-field');
             const key = `${cardId}-${field}`;
             
             if (itineraryData[key]) {
-                // 使用 Local Storage 儲存的完整 HTML
                 element.innerHTML = itineraryData[key];
             }
         });
     }
 
-    // 2. 儲存修改到 Local Storage
-    function saveEdit(element, newValue) {
+    // 2. 儲存行程修改到 Local Storage
+    function saveItineraryEdit(element, newValue) {
         const cardId = element.closest('.activity-card').getAttribute('data-id');
         const field = element.getAttribute('data-field');
         const key = `${cardId}-${field}`;
 
-        // 儲存實際的 HTML 內容，以便可以保留 <a href> 標籤
         itineraryData[key] = newValue; 
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(itineraryData));
+        localStorage.setItem(ITINERARY_STORAGE_KEY, JSON.stringify(itineraryData));
     }
 
-    // 3. 處理點擊變成輸入框的邏輯
+    // 3. 處理行程點擊變成輸入框的邏輯
     editableElements.forEach(element => {
         const clickHandler = function(event) {
-            // 阻止點擊地圖連結時也觸發編輯
             if (event.target.tagName === 'A') {
                 return;
             }
@@ -491,22 +558,19 @@
             const originalValue = this.innerHTML;
             const field = this.getAttribute('data-field');
 
-            // 創建輸入框
             const input = document.createElement(field === 'note' || field === 'desc' ? 'textarea' : 'input');
             if (field !== 'note' && field !== 'desc') {
                  input.type = 'text';
             }
             input.className = 'editable-input';
             
-            // 移除地圖連結，只編輯純文字內容
             let textToEdit = originalValue;
             let mapLinkHTML = '';
             
             if (field === 'location') {
                 const linkMatch = originalValue.match(/<a.*?<\/a>/i);
                 if (linkMatch) {
-                    mapLinkHTML = linkMatch[0]; // 提取連結 HTML
-                    // 從原始值中移除連結，只留下文字部分進行編輯
+                    mapLinkHTML = linkMatch[0]; 
                     textToEdit = originalValue.replace(mapLinkHTML, '').trim(); 
                 }
             }
@@ -516,18 +580,14 @@
                 input.style.height = '50px';
             }
 
-            // 替換原元素為輸入框
             this.replaceWith(input);
             input.focus();
 
-            // 處理儲存邏輯 (按下 Enter 或失去焦點)
             const finalizeEdit = () => {
                 const newValue = input.value.trim() || textToEdit; 
                 
-                // 重建 HTML 內容
                 let finalHTML = newValue;
                 if (field === 'location' && mapLinkHTML) {
-                    // 將連結重新加回去，確保文字在前，連結在後
                     finalHTML = newValue + ' ' + mapLinkHTML;
                 }
 
@@ -537,16 +597,13 @@
                 newElement.innerHTML = finalHTML;
 
                 input.replaceWith(newElement);
-                saveEdit(newElement, finalHTML);
+                saveItineraryEdit(newElement, finalHTML);
                 
-                // 重新綁定事件
                 newElement.addEventListener('click', clickHandler); 
             };
             
-            // 失去焦點時儲存
             input.addEventListener('blur', finalizeEdit);
             
-            // 按下 Enter 時儲存 (textarea 則不響應 Enter)
             if (field !== 'note' && field !== 'desc') {
                  input.addEventListener('keypress', (e) => {
                     if (e.key === 'Enter') {
@@ -558,9 +615,171 @@
         element.addEventListener('click', clickHandler);
     });
 
+    // ====================================================================
+    // 花費紀錄功能 JavaScript
+    // ====================================================================
+    const expenseTableBody = document.querySelector('#expense-table tbody');
+    const addExpenseBtn = document.getElementById('add-expense-btn');
+    const totalExpenseElement = document.getElementById('total-expense');
+    
+    // 儲存花費紀錄
+    function saveExpenses() {
+        localStorage.setItem(EXPENSE_STORAGE_KEY, JSON.stringify(expenseRecords));
+    }
+
+    // 計算總額
+    function calculateTotal() {
+        const total = expenseRecords.reduce((sum, record) => {
+            const amount = parseInt(record.amount) || 0;
+            return sum + amount;
+        }, 0);
+        totalExpenseElement.textContent = `¥ ${total.toLocaleString()}`;
+    }
+
+    // 渲染單筆花費紀錄
+    function renderExpenseRow(record, index) {
+        const row = expenseTableBody.insertRow();
+        row.setAttribute('data-index', index);
+        
+        // 欄位名稱映射，用於儲存時取值
+        const fields = ['date', 'item', 'category', 'amount', 'note'];
+
+        fields.forEach(field => {
+            const cell = row.insertCell();
+            cell.classList.add('expense-editable');
+            cell.setAttribute('data-field', field);
+            
+            // 處理金額的格式顯示
+            let displayValue = record[field];
+            if (field === 'amount') {
+                displayValue = (parseInt(record[field]) || 0).toLocaleString();
+                cell.style.textAlign = 'right';
+            } else if (field === 'date' && record[field].match(/^\d{4}-\d{2}-\d{2}$/)) {
+                // 如果是標準日期格式，使用 input type="date"
+                cell.setAttribute('data-value', record[field]); // 儲存原始值
+            } else {
+                cell.style.textAlign = 'left';
+            }
+
+            cell.textContent = displayValue;
+            cell.addEventListener('click', handleExpenseCellClick);
+        });
+
+        // 刪除按鈕
+        const deleteCell = row.insertCell();
+        deleteCell.innerHTML = '<button class="delete-btn">🗑️</button>';
+        deleteCell.style.textAlign = 'center';
+        deleteCell.querySelector('.delete-btn').addEventListener('click', () => {
+            deleteExpenseRow(index);
+        });
+    }
+
+    // 處理花費單元格點擊編輯
+    function handleExpenseCellClick() {
+        const cell = this;
+        cell.removeEventListener('click', handleExpenseCellClick);
+        const field = cell.getAttribute('data-field');
+        const index = parseInt(cell.closest('tr').getAttribute('data-index'));
+        
+        let originalValue = cell.textContent.replace(/,/g, '').replace('¥', '').trim();
+        
+        // 為了正確編輯日期，如果日期欄位有 data-value，則使用 data-value
+        if (field === 'date' && cell.hasAttribute('data-value')) {
+            originalValue = cell.getAttribute('data-value');
+        }
+
+        const input = document.createElement('input');
+        input.className = 'editable-input';
+        input.value = originalValue;
+        
+        if (field === 'amount') {
+            input.type = 'number';
+            input.style.textAlign = 'right';
+        } else if (field === 'date') {
+            input.type = 'date';
+        }
+
+        cell.textContent = '';
+        cell.appendChild(input);
+        input.focus();
+
+        const finalizeEdit = () => {
+            let newValue = input.value.trim();
+            
+            if (field === 'amount') {
+                // 確保儲存數字
+                newValue = parseInt(newValue) || 0;
+            } else if (field === 'date' && newValue.match(/^\d{4}-\d{2}-\d{2}$/)) {
+                cell.setAttribute('data-value', newValue);
+            }
+            
+            // 更新 records 陣列
+            expenseRecords[index][field] = newValue;
+            saveExpenses();
+            
+            // 重新渲染單元格顯示
+            cell.textContent = (field === 'amount') ? newValue.toLocaleString() : newValue;
+            cell.style.textAlign = (field === 'amount') ? 'right' : 'left';
+            
+            // 重新綁定事件
+            cell.addEventListener('click', handleExpenseCellClick);
+            
+            if (field === 'amount') {
+                calculateTotal();
+            }
+        };
+
+        input.addEventListener('blur', finalizeEdit);
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                finalizeEdit();
+            }
+        });
+    }
+
+    // 新增花費紀錄
+    function addExpenseRow() {
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        const defaultDate = `${yyyy}-${mm}-${dd}`;
+
+        const newRecord = {
+            date: defaultDate,
+            item: '新項目',
+            category: '購物/餐飲',
+            amount: 0,
+            note: ''
+        };
+        expenseRecords.push(newRecord);
+        saveExpenses();
+        renderAllExpenses();
+    }
+
+    // 刪除花費紀錄
+    function deleteExpenseRow(index) {
+        if (confirm('確定要刪除這筆花費紀錄嗎？')) {
+            expenseRecords.splice(index, 1);
+            saveExpenses();
+            renderAllExpenses();
+        }
+    }
+
+    // 渲染所有花費紀錄
+    function renderAllExpenses() {
+        expenseTableBody.innerHTML = '';
+        expenseRecords.forEach((record, index) => {
+            renderExpenseRow(record, index);
+        });
+        calculateTotal();
+    }
+    
+    addExpenseBtn.addEventListener('click', addExpenseRow);
+
 
     // ====================================================================
-    // 天氣與日期切換 JavaScript (與前一版本相同)
+    // 天氣與日期切換 JavaScript 
     // ====================================================================
     
     const API_KEY = "f59530fab0600c5a0ff62aa969a9e59a"; 
@@ -635,6 +854,7 @@
             contentToShow.classList.add('active');
         }
 
+        // 只有行程日才抓取天氣
         if (selectedCity) {
             fetchWeather(selectedCity, `weather-${selectedDay}`);
         }
@@ -645,16 +865,16 @@
     });
 
     document.addEventListener('DOMContentLoaded', () => {
-        // 載入本地儲存的修改
-        loadEdits(); 
+        // 載入行程的本地儲存修改
+        loadItineraryEdits(); 
         
-        const defaultDayTab = document.querySelector('.day-tab.active');
+        // 載入花費紀錄
+        renderAllExpenses();
+
+        // 預設顯示第一個行程日
+        const defaultDayTab = document.querySelector('.day-tab[data-day="D1"]');
         if (defaultDayTab) {
-            const selectedDay = defaultDayTab.getAttribute('data-day');
-            const selectedCity = defaultDayTab.getAttribute('data-city');
-            if (selectedCity) {
-                fetchWeather(selectedCity, `weather-${selectedDay}`);
-            }
+            switchDayContent(defaultDayTab);
         }
     });
 
