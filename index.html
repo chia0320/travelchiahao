@@ -120,13 +120,23 @@
             margin-bottom: 5px;
         }
         
-        /* 新增的景點介紹樣式 */
+        /* 景點圖片樣式 */
+        .location-image {
+            max-width: 100%; /* 確保圖片不超出卡片寬度 */
+            height: auto;
+            border-radius: 6px; /* 圖片圓角 */
+            margin-top: 10px; /* 與上方文字間距 */
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        /* 景點介紹樣式 */
         .description-text {
             font-size: 0.9em;
-            color: #6a6a6a; /* 稍深的灰色，作為描述文字 */
+            color: #6a6a6a;
             margin-top: 5px;
             padding-top: 5px;
-            border-top: 1px solid #eee; /* 增加一條細線與下方 Note 分隔 */
+            border-top: 1px solid #eee;
         }
 
         .note { font-size: 0.8em; color: #888; margin-top: 5px; }
@@ -167,22 +177,33 @@
                 <div class="time-box">11:00</div>
                 <div class="details">
                     <div class="location">✈️ 抵達 <a href="https://www.google.com/maps/search/?api=1&query=福岡機場" target="_blank">福岡機場</a></div>
-                    <div class="description-text">九州的空中門戶，地鐵可直達市區，交通便利，是展開旅程的第一站。</div>
-                    <div class="note">從機場前往市區，辦理入住或寄放行李。</div>
+                    <img src="images/fukuoka_airport.jpg" alt="福岡機場" class="location-image">
+                    <div class="description-text">九州的空中門戶，地鐵可直達市區，展開旅程的第一站。</div>
+                    <div class="note">辦理入境手續。</div>
+                </div>
+            </div>
+            <div class="activity-card highlight">
+                <div class="time-box">11:30</div>
+                <div class="details">
+                    <div class="location">🚗 租車手續（機場取車）</div>
+                    <div class="description-text">在機場租車點辦理手續，準備展開自駕之旅。</div>
+                    <div class="note">地點：<a href="https://www.google.com/maps/search/?api=1&query=スカイレンタカー博多駅店" target="_blank">三菱レンタカー/ユナイテッドレンタカー福岡空港店</a></div>
                 </div>
             </div>
             <div class="activity-card">
-                <div class="time-box">下午</div>
+                <div class="time-box">12:30</div>
                 <div class="details">
                     <div class="location">🛍️ <a href="https://www.google.com/maps/search/?api=1&query=LaLaport+福岡" target="_blank">LaLaport 福岡</a></div>
+                    <img src="images/lalaport_fukuoka.jpg" alt="LaLaport 福岡" class="location-image">
                     <div class="description-text">新興的大型複合商場，戶外有等比 RX-93ff ν鋼彈立像，是購物與拍照的好去處。</div>
                     <div class="note">參觀商場與等比鋼彈。</div>
                 </div>
             </div>
             <div class="activity-card">
-                <div class="time-box">晚上</div>
+                <div class="time-box">16:00</div>
                 <div class="details">
                     <div class="location">⛲️ <a href="https://www.google.com/maps/search/?api=1&query=博多運河城" target="_blank">博多運河城</a></div>
+                    <img src="images/hakata_canal_city.jpg" alt="博多運河城" class="location-image">
                     <div class="description-text">結合購物、美食、娛樂的商業設施，常有精彩的水舞秀表演。</div>
                     <div class="note">晚餐與購物。</div>
                 </div>
@@ -191,7 +212,7 @@
                 <div class="time-box">住</div>
                 <div class="details">
                     <div class="location">🏨 S-Peria Hotel Hakata</div>
-                    <div class="description-text">地點位於博多，方便隔天前往租車。</div>
+                    <div class="description-text">地點位於博多，方便隔日出發。</div>
                     <div class="note">含早餐。</div>
                 </div>
             </div>
@@ -203,35 +224,38 @@
                 <div class="weather-box" id="weather-D2"></div>
             </div>
             <div class="activity-card">
-                <div class="time-box">09:00</div>
-                <div class="details">
-                    <div class="location">🚗 租車手續</div>
-                    <div class="description-text">在博多站附近完成租車手續後，即可開始自駕前往別府。</div>
-                    <div class="note">地點：<a href="https://www.google.com/maps/search/?api=1&query=スカイレンタカー博多駅店" target="_blank">スカイレンタカー博多駅店</a></div>
-                </div>
-            </div>
-            <div class="activity-card">
                 <div class="time-box">11:00</div>
                 <div class="details">
                     <div class="location">🦁 <a href="https://www.google.com/maps/search/?api=1&query=九州野生動物園" target="_blank">九州野生動物園</a></div>
+                    <img src="images/kyushu_wildlife_park.jpg" alt="九州野生動物園" class="location-image">
                     <div class="description-text">可以在園內搭乘專用巴士或自駕，近距離觀察猛獸和動物。</div>
-                    <div class="note">遊園參觀。</div>
+                    <div class="note">從福岡開車前往。</div>
                 </div>
             </div>
             <div class="activity-card">
                 <div class="time-box">13:00</div>
                 <div class="details">
-                    <div class="location">♨️ <a href="https://www.google.com/maps/search/?api=1&query=別府地獄谷" target="_blank">別府地獄谷</a> & <a href="https://www.google.com/maps/search/?api=1&query=狭霧台上展望所" target="_blank">狭霧台</a></div>
-                    <div class="description-text">別府的著名溫泉區，以噴發各種奇異顏色和形狀的溫泉而聞名。</div>
+                    <div class="location">♨️ <a href="https://www.google.com/maps/search/?api=1&query=別府地獄谷" target="_blank">別府地獄谷</a> & 狭霧台上展望所</div>
+                    <img src="images/beppu_hells.jpg" alt="別府地獄谷" class="location-image">
+                    <div class="description-text">別府的著名溫泉區，以噴發各種奇異顏色和形狀的溫泉而聞名，並在展望台眺望景色。</div>
                     <div class="note">海地獄等觀光。</div>
                 </div>
             </div>
             <div class="activity-card">
                 <div class="time-box">15:00</div>
                 <div class="details">
-                    <div class="location">🛍️ <a href="https://www.google.com/maps/search/?api=1&query=由布院童話村" target="_blank">由布院散策 & 童話村</a></div>
-                    <div class="description-text">充滿歐洲童話氛圍的特色小鎮，街道兩旁盡是精緻的店鋪和咖啡館。</div>
-                    <div class="note">湯之坪街道逛街。</div>
+                    <div class="location">🛍️ <a href="https://www.google.com/maps/search/?api=1&query=由布院童話村" target="_blank">由布院散策</a></div>
+                    <div class="description-text">湯之坪街道逛街，享受特色小店與下午茶氛圍。</div>
+                    <div class="note"></div>
+                </div>
+            </div>
+            <div class="activity-card">
+                <div class="time-box">16:00</div>
+                <div class="details">
+                    <div class="location">🏡 <a href="https://www.google.com/maps/search/?api=1&query=由布院童話村" target="_blank">湯布院童話村 (Yufuin Floral Village)</a></div>
+                    <img src="images/yufuin_village.jpg" alt="湯布院童話村" class="location-image">
+                    <div class="description-text">充滿歐洲童話氛圍的特色小鎮，適合拍照留念。</div>
+                    <div class="note"></div>
                 </div>
             </div>
             <div class="activity-card highlight">
@@ -239,7 +263,7 @@
                 <div class="details">
                     <div class="location">🏠 花之湯旅館 Oyado Hananoyu</div>
                     <div class="description-text">享受日式溫泉旅館。</div>
-                    <div class="note">⚠️ 6點前要Check in。</div>
+                    <div class="note">⚠️ **6點前要Check in**。</div>
                 </div>
             </div>
         </div>
@@ -253,14 +277,16 @@
                 <div class="time-box">11:00</div>
                 <div class="details">
                     <div class="location">⛩️ <a href="https://www.google.com/maps/search/?api=1&query=上色見熊野座神社" target="_blank">上色見熊野座神社</a></div>
+                    <img src="images/kamishikimi_kumanoza.jpg" alt="上色見熊野座神社" class="location-image">
                     <div class="description-text">隱藏在深山中的神秘神社，參道上的苔蘚燈籠極具靈氣與神秘氛圍。</div>
-                    <div class="note">參觀神秘的神社。</div>
+                    <div class="note">從由布院開車前往。</div>
                 </div>
             </div>
             <div class="activity-card">
                 <div class="time-box">12:30</div>
                 <div class="details">
                     <div class="location">🌋 <a href="https://www.google.com/maps/search/?api=1&query=阿蘇中岳火山口" target="_blank">阿蘇中岳火山口</a></div>
+                    <img src="images/aso_crater.jpg" alt="阿蘇中岳火山口" class="location-image">
                     <div class="description-text">活火山的中心地帶，能親眼看到噴發氣體的火山口，感受大自然的魄力。</div>
                     <div class="note">視火山氣體狀況決定是否能靠近。</div>
                 </div>
@@ -269,6 +295,7 @@
                 <div class="time-box">14:00</div>
                 <div class="details">
                     <div class="location">🐴 <a href="https://www.google.com/maps/search/?api=1&query=草千里之濱" target="_blank">草千里之濱</a></div>
+                    <img src="images/kusasenri.jpg" alt="草千里之濱" class="location-image">
                     <div class="description-text">阿蘇山壯闊的火山口草原，景色開闊，是欣賞阿蘇五嶽美景的最佳地點。</div>
                     <div class="note">廣闊的草原景觀。</div>
                 </div>
@@ -276,9 +303,9 @@
             <div class="activity-card">
                 <div class="time-box">16:00</div>
                 <div class="details">
-                    <div class="location">🛒 <a href="https://www.google.com/maps/search/?api=1&query=Ebisupana+Aso" target="_blank">Ebisupana Aso</a></div>
+                    <div class="location">🛒 <a href="https://www.google.com/maps/search/?api=1&query=Ebisupana+Aso" target="_blank">Ebisupana Aso 採購晚餐</a></div>
                     <div class="description-text">當地的超市，適合採購食材和生活用品，準備晚上在別墅烹飪。</div>
-                    <div class="note">採購晚餐食材。</div>
+                    <div class="note"></div>
                 </div>
             </div>
             <div class="activity-card highlight">
@@ -286,7 +313,7 @@
                 <div class="details">
                     <div class="location">🏠 藤のヴィラ Fujino Villa</div>
                     <div class="description-text">阿蘇山區的特色別墅，可自行烹煮晚餐。</div>
-                    <div class="note">入住密碼：0325</div>
+                    <div class="note">入住密碼：**0325**</div>
                 </div>
             </div>
         </div>
@@ -300,6 +327,7 @@
                 <div class="time-box">10:00</div>
                 <div class="details">
                     <div class="location">🚁 <a href="https://www.google.com/maps/search/?api=1&query=阿蘇山ヘリコプター遊覧飛行" target="_blank">阿蘇山直升機遊覧飛行</a></div>
+                    <img src="images/aso_helicopter.jpg" alt="阿蘇山直升機遊覧飛行" class="location-image">
                     <div class="description-text">從空中俯瞰阿蘇火山口、草千里之濱的壯麗景觀，視天氣狀況而定。</div>
                     <div class="note">直升機觀光飛行。</div>
                 </div>
@@ -308,6 +336,7 @@
                 <div class="time-box">14:00</div>
                 <div class="details">
                     <div class="location">🚂 <a href="https://www.google.com/maps/search/?api=1&query=高千歲小火車" target="_blank">高千穗小火車</a></div>
+                    <img src="images/takachiho_train.jpg" alt="高千穗小火車" class="location-image">
                     <div class="description-text">沿著廢棄鐵道行駛，穿梭於峽谷之間的觀光小火車，是獨特的體驗。</div>
                     <div class="note">體驗廢棄鐵道改建的觀光小火車。</div>
                 </div>
@@ -316,6 +345,7 @@
                 <div class="time-box">15:30</div>
                 <div class="details">
                     <div class="location">⛩️ <a href="https://www.google.com/maps/search/?api=1&query=天安河原" target="_blank">天安河原</a></div>
+                    <img src="images/amano_yasukawara.jpg" alt="天安河原" class="location-image">
                     <div class="description-text">傳說中神明聚集議事之地，充滿靈氣，河床上堆滿了信徒祈願的石塔。</div>
                     <div class="note">傳說中的神話之地。</div>
                 </div>
@@ -347,6 +377,7 @@
                 <div class="time-box">10:00</div>
                 <div class="details">
                     <div class="location">🛶 <a href="https://www.google.com/maps/search/?api=1&query=高千歲划船" target="_blank">高千穗划船</a></div>
+                    <img src="images/takachiho_boat.jpg" alt="高千穗划船" class="location-image">
                     <div class="description-text">在高千穗峽谷的瀑布下划船，是體驗峽谷美景的最佳方式（需提前預約或排隊）。</div>
                     <div class="note">高千穗峽谷划船體驗 (視天氣狀況)。</div>
                 </div>
@@ -355,6 +386,7 @@
                 <div class="time-box">下午</div>
                 <div class="details">
                     <div class="location">⛩️ <a href="https://www.google.com/maps/search/?api=1&query=太宰府天滿宮" target="_blank">太宰府天滿宮</a></div>
+                    <img src="images/dazaifu_tenmangu.jpg" alt="太宰府天滿宮" class="location-image">
                     <div class="description-text">九州最重要的神社之一，供奉學問之神，參道上的梅枝餅是必嚐美食。</div>
                     <div class="note">回福岡途中參觀。</div>
                 </div>
@@ -363,16 +395,17 @@
                 <div class="time-box">傍晚</div>
                 <div class="details">
                     <div class="location">🛍️ <a href="https://www.google.com/maps/search/?api=1&query=天神LOFT" target="_blank">天神LOFT</a> & 買明太子麵包</div>
+                    <img src="images/tenjin_loft.jpg" alt="天神LOFT" class="location-image">
                     <div class="description-text">福岡市中心最大的購物區之一，LOFT 是日系雜貨愛好者的天堂。</div>
                     <div class="note">在天神地區進行最後採購。</div>
                 </div>
             </div>
             <div class="activity-card highlight">
-                <div class="time-box">20:00</div>
+                <div class="time-box">晚上</div>
                 <div class="details">
                     <div class="location">🚗 還車</div>
-                    <div class="description-text">請務必準時歸還車輛。</div>
-                    <div class="note">地點：<a href="https://www.google.com/maps/search/?api=1&query=スカイレンタカー博多駅店" target="_blank">スカイレンタカー博多駅店</a></div>
+                    <div class="description-text">在返回市區後，將車輛歸還。</div>
+                    <div class="note">地點：<a href="https://www.google.com/maps/search/?api=1&query=スカイレンタカー博多駅店" target="_blank">三菱レンタカー/ユナイテッドレンタカー福岡空港店</a></div>
                 </div>
             </div>
             <div class="activity-card highlight">
@@ -394,8 +427,9 @@
                 <div class="time-box">09:00</div>
                 <div class="details">
                     <div class="location">✈️ 前往 <a href="https://www.google.com/maps/search/?api=1&query=福岡機場" target="_blank">福岡機場</a></div>
+                    <img src="images/fukuoka_airport.jpg" alt="福岡機場" class="location-image">
                     <div class="description-text">從博多搭乘地鐵即可直達福岡機場。</div>
-                    <div class="note">預留充裕時間辦理登機。</div>
+                    <div class="note">注意：還車已在 D5 晚上完成。</div>
                 </div>
             </div>
             <div class="activity-card highlight">
@@ -412,8 +446,7 @@
 
 <script>
     // ====================================================================
-    // JavaScript 程式碼：處理點擊事件和天氣 API 呼叫
-    // (與上一個版本相同，保持天氣功能)
+    // JavaScript 程式碼：處理點擊事件和天氣 API 呼叫 (與前一版本相同)
     // ====================================================================
     
     // 您的 OpenWeather API Key
