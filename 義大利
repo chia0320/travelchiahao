@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>羅馬帝國：時光旅人深度手冊</title>
+    <style>
+        :root {
+            --ancient-gold: #c5a059;
+            --marble-white: #f4f4f4;
+            --roman-red: #8b0000;
+            --dark-stone: #2c2c2c;
+        }
+
+        body {
+            font-family: 'Segoe UI', Microsoft JhengHei, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            background-color: var(--marble-white);
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                        url('https://images.unsplash.com/photo-1552832230-c0197dd311b5?auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 40vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: -50px auto 0;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #ccc;
+        }
+
+        h2 {
+            color: var(--roman-red);
+            border-left: 5px solid var(--ancient-gold);
+            padding-left: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .highlight-box {
+            background-color: #fff9f0;
+            border: 1px solid var(--ancient-gold);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .colosseum-deep-dive {
+            background: var(--dark-stone);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .timeline-step {
+            border-left: 2px solid var(--ancient-gold);
+            padding-left: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .timeline-step::before {
+            content: '●';
+            color: var(--ancient-gold);
+            position: absolute;
+            left: -8px;
+            top: 0;
+        }
+
+        .img-placeholder {
+            width: 100%;
+            height: 250px;
+            background-color: #ddd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-style: italic;
+            color: #666;
+            background-size: cover;
+            background-position: center;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #888;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>羅馬帝國：時光旅人深度手冊</h1>
+    <p>永恆之城的一日深度漫遊</p>
+</header>
+
+<div class="container">
+    <div class="section">
+        <h2>🏛️ 羅馬競技場 (Colosseo)</h2>
+        <p><strong>建議停留：</strong> 120 分鐘 | <strong>門票：</strong> 頂層 (Attico) 含地下室</p>
+        
+        <div class="img-placeholder" style="background-image: url('https://images.unsplash.com/photo-1594913785162-e6785b423cb1?auto=format&fit=crop&w=800&q=80');">
+            [競技場全景圖]
+        </div>
+
+        <div class="colosseum-deep-dive">
+            <h3>⏳ 2 小時深度探索路徑</h3>
+            
+            <div class="timeline-step">
+                <strong>0-40 min: 階級與建築</strong>
+                <p>觀察入座系統。底層大理石（元老院）與頂層木座（平民）的對比。了解「嘔吐口」如何在15分鐘內疏散5萬人。</p>
+            </div>
+
+            <div class="timeline-step">
+                <strong>40-70 min: 地下地獄 (Hypogeum)</strong>
+                <p>俯瞰迷宮般的地下室。想像28部奴隸操作的升降機，將猛獸與鬥士瞬間送上地面。</p>
+            </div>
+
+            <div class="timeline-step">
+                <strong>70-110 min: 登頂雲端 (Attico)</strong>
+                <p>抵達最高點！這裡是操作 <em>Velarium</em>（巨型遮陽帆布）的基地，也是俯瞰君士坦丁凱旋門與廣場的最佳角度。</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🏹 君士坦丁凱旋門 (Arco di Costantino)</h2>
+        <div class="img-placeholder" style="background-image: url('https://images.unsplash.com/photo-1525874684015-58379d421a52?auto=format&fit=crop&w=800&q=80');">
+            [凱旋門細節圖]
+        </div>
+        <p><strong>歷史看點：</strong> 資源回收的藝術。牆上的浮雕是從早期皇帝的建築「借用」而來的，象徵著帝國晚期藝術風格的轉變。</p>
+    </div>
+
+    <div class="section">
+        <h2>🛁 卡拉卡拉浴場 (Terme di Caracalla)</h2>
+        <div class="img-placeholder" style="background-image: url('https://images.unsplash.com/photo-1599074914978-2946b69e5745?auto=format&fit=crop&w=800&q=80');">
+            [浴場遺址圖]
+        </div>
+        <div class="highlight-box">
+            <strong>導遊筆記：</strong> 這不僅是浴室，是羅馬人的社交中心。包含圖書館、健身房與冷熱水循環系統，可容納 1600 人。
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>📜 古羅馬廣場 (Foro Romano)</h2>
+        <div class="img-placeholder" style="background-image: url('https://images.unsplash.com/photo-1542332213-9b5a5a3fad35?auto=format&fit=crop&w=800&q=80');">
+            [廣場全景圖]
+        </div>
+        <ul>
+            <li><strong>凱撒神廟：</strong> 凱撒火化的原址，常年有人獻花。</li>
+            <li><strong>元老院：</strong> 羅馬共和國權力的心臟。</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>🌄 卡比托利歐山 (Campidoglio)</h2>
+        <div class="img-placeholder" style="background-image: url('https://images.unsplash.com/photo-1515542641795-85ed3b59c367?auto=format&fit=crop&w=800&q=80');">
+            [米開朗基羅廣場]
+        </div>
+        <p><strong>完美句點：</strong> 由米開朗基羅設計。繞到建築後方，可以拍到整個古羅馬廣場的黃昏全景。</p>
+    </div>
+
+    <footer>
+        <p>🇮🇹 祝您在羅馬度過美好的一天 | Buona Giornata!</p>
+    </footer>
+</div>
+
+</body>
+</html>
