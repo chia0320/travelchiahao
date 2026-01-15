@@ -3,688 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CHIA X HAO 🇯🇵 九州之旅</title>
+    <title>義大利文藝復興之旅 2026</title>
     <style>
         :root {
-            --color-primary: #5c6c60; /* 頂部標題的沉穩綠 */
-            --color-secondary: #f4f6f3; /* 淺色背景 */
-            --color-card-bg: #ffffff; /* 卡片背景 */
-            --color-text: #333333;
-            --color-highlight: #e7a048; /* 日期卡片高亮色 */
-            --color-active-bg: #f9f9f9; /* Tab Active Background */
-            --color-shadow: rgba(0, 0, 0, 0.05);
-            --color-tag-food: #f9e2e2; /* 食物標籤 */
-            --color-tag-info: #e2f9e6; /* 資訊標籤 */
+            --primary: #2c3e50;
+            --accent: #e67e22;
+            --bg: #f8f9fa;
+            --card: #ffffff;
         }
+        body { font-family: -apple-system, "Noto Sans TC", sans-serif; background: var(--bg); margin: 0; padding-bottom: 70px; }
+        header { background: var(--primary); color: white; padding: 20px; text-align: center; }
+        .container { padding: 15px; }
         
-        body, html {
-            margin: 0;
-            padding: 0;
-            font-family: 'Hiragino Sans', 'Noto Sans TC', sans-serif;
-            background-color: var(--color-secondary);
-            color: var(--color-text);
-            overscroll-behavior: contain;
-        }
+        /* 住宿卡片樣式 */
+        .hotel-card { background: var(--card); border-radius: 12px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 5px solid var(--accent); }
+        .hotel-name { font-weight: bold; font-size: 1.1em; color: var(--primary); }
+        .info-row { margin: 8px 0; font-size: 0.9em; display: flex; align-items: center; }
+        .btn { display: inline-block; background: #eee; padding: 8px 12px; border-radius: 6px; text-decoration: none; color: #333; margin-top: 10px; font-size: 0.85em; font-weight: 500; }
+        .btn-call { background: #27ae60; color: white; margin-right: 5px; }
+        .btn-map { background: #3498db; color: white; }
 
-        /* 頂部標題欄 */
-        .header {
-            background-color: var(--color-primary);
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-            font-size: 1.2rem;
-            font-weight: bold;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+        /* 行程標記 */
+        .booking-tag { background: #e74c3c; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-left: 5px; }
 
-        /* 頂部日期 Tab 欄 */
-        .tab-bar {
-            display: flex;
-            overflow-x: auto;
-            white-space: nowrap;
-            background-color: white;
-            padding: 10px 0;
-            box-shadow: 0 2px 4px var(--color-shadow);
-            position: sticky;
-            top: 60px; /* 貼在標題下方 */
-            z-index: 900;
-        }
-
-        .tab {
-            flex: 0 0 auto;
-            padding: 10px 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: background-color 0.2s, box-shadow 0.2s;
-            border-right: 1px solid #eee;
-            position: relative;
-        }
-
-        .tab-day { font-size: 0.9rem; font-weight: bold; }
-        .tab-date { font-size: 0.75rem; color: #777; }
-
-        .tab.active {
-            background-color: var(--color-active-bg);
-            box-shadow: inset 0 -3px 0 var(--color-highlight); /* 底線高亮 */
-        }
-
-        /* 花費 Tab (右側獨立) */
-        .tab-expense {
-            margin-left: auto;
-            font-size: 0.75rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0 15px;
-            border-left: 1px solid #eee;
-        }
-
-        /* 內容區塊 */
-        .content {
-            padding: 20px;
-        }
-
-        .tab-content {
-            display: none;
-            padding-top: 5px;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        /* 每日標題卡片 */
-        .day-header-card {
-            background-color: var(--color-card-bg);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 1px 3px var(--color-shadow);
-            border-left: 5px solid var(--color-highlight);
-        }
-
-        .day-title {
-            font-size: 1.1rem;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .weather-info {
-            font-size: 0.8rem;
-            color: #777;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        /* 行程卡片 */
-        .schedule-card {
-            background-color: var(--color-card-bg);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            box-shadow: 0 1px 3px var(--color-shadow);
-            display: flex;
-            gap: 10px;
-        }
-
-        .time {
-            flex-shrink: 0;
-            font-weight: bold;
-            color: var(--color-highlight);
-            width: 50px;
-        }
-
-        .details {
-            flex-grow: 1;
-        }
-
-        .details h3 {
-            margin: 0 0 5px 0;
-            font-size: 1rem;
-            font-weight: bold;
-        }
-
-        .sub-details {
-            font-size: 0.9rem;
-            color: #555;
-            margin-bottom: 8px;
-        }
+        /* 分頁切換 */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 100; }
+        nav div { flex: 1; text-align: center; padding: 15px; font-size: 0.9em; cursor: pointer; color: #7f8c8d; }
+        nav div.active { color: var(--accent); font-weight: bold; border-top: 3px solid var(--accent); }
         
-        /* 導航按鈕 */
-        .nav-button {
-            display: inline-block;
-            background-color: #2980b9;
-            color: white;
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            text-decoration: none;
-            margin-top: 5px;
-        }
-
-        /* 導遊標籤 */
-        .tag {
-            display: inline-block;
-            font-size: 0.75rem;
-            padding: 3px 6px;
-            border-radius: 3px;
-            margin-right: 5px;
-            font-weight: bold;
-            line-height: 1;
-        }
-
-        .tag-food { background-color: var(--color-tag-food); color: #c0392b; }
-        .tag-info { background-color: var(--color-tag-info); color: #27ae60; }
-        .tag-stay { background-color: #e6f7ff; color: #2980b9; }
-
-        /* 記帳頁面樣式 */
-        .expense-section h2 {
-            color: var(--color-primary);
-            border-bottom: 2px solid var(--color-primary);
-            padding-bottom: 5px;
-        }
-        .expense-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-        }
-        .expense-table th, .expense-table td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        .expense-table th {
-            background-color: #e9e9e9;
-        }
-        .total-row {
-            font-weight: bold;
-            background-color: #c8e6c9 !important; /* 淺綠色突出總計 */
-        }
+        /* 日程表 */
+        .day-item { background: white; padding: 12px; margin-bottom: 10px; border-radius: 8px; }
+        .day-date { font-weight: bold; color: var(--accent); margin-right: 10px; }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        CHIA X HAO 🇯🇵 九州之旅
-    </div>
+<header>
+    <h1>🇮🇹 Italy 2026</h1>
+    <small>FEB 19 - MAR 05</small>
+</header>
 
-    <div class="tab-bar">
-        <div class="tab active" data-tab="D1">
-            <div class="tab-day">D1</div>
-            <div class="tab-date">1/1</div>
-        </div>
-        <div class="tab" data-tab="D2">
-            <div class="tab-day">D2</div>
-            <div class="tab-date">1/2</div>
-        </div>
-        <div class="tab" data-tab="D3">
-            <div class="tab-day">D3</div>
-            <div class="tab-date">1/3</div>
-        </div>
-        <div class="tab" data-tab="D4">
-            <div class="tab-day">D4</div>
-            <div class="tab-date">1/4</div>
-        </div>
-        <div class="tab" data-tab="D5">
-            <div class="tab-day">D5</div>
-            <div class="tab-date">1/5</div>
-        </div>
-        <div class="tab" data-tab="D6">
-            <div class="tab-day">D6</div>
-            <div class="tab-date">1/6</div>
-        </div>
-        <div class="tab tab-expense" data-tab="Expense">
-            <span role="img" aria-label="expense">💰</span>
-            花費
-        </div>
-    </div>
-
-    <div class="content">
-
-        <div id="D1" class="tab-content active">
-            <div class="day-header-card">
-                <div class="day-title">1 月 1 日 (一) - 抵達/福岡</div>
-                <div class="weather-info">
-                    <span>福岡 | 晴天多雲</span>
-                    <span>預計 4/9°C</span>
-                </div>
-            </div>
-
-            <div class="schedule-card">
-                <div class="time">11:00</div>
-                <div class="details">
-                    <h3>✈️ 抵達福岡國際機場</h3>
-                    <div class="sub-details">
-                        <span class="tag tag-info">資訊</span>
-                        國際線航廈
-                    </div>
-                </div>
-            </div>
-
-            <div class="schedule-card">
-                <div class="time">11:30</div>
-                <div class="details">
-                    <h3>🚗 租車手續</h3>
-                    <div class="sub-details">
-                        <span class="tag tag-info">交通</span>
-                        三菱レンタカー/ユナイテッドレンタカー福岡空港店<br>
-                        **重要提醒：** 機場 A3 出口 14 號公車牌搭乘接駁車
-                        <a class="nav-button" href="https://maps.app.goo.gl/VCPiTGMDQGXpd8Sy7" target="_blank">導航至租車店</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="schedule-card">
-                <div class="time">12:30</div>
-                <div class="details">
-                    <h3>🛍️ LaLaport 福岡 (購物/午餐)</h3>
-                    <div class="sub-details">
-                        **攻略：** 必看<span class="tag tag-info">巨大鋼彈立像</span>。美食街選擇多。
-                        <a class="nav-button" href="https://www.google.com/maps/search/?api=1&query=LaLaport+福岡" target="_blank">導航</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="schedule-card">
-                <div class="time">16:00</div>
-                <div class="details">
-                    <h3>🛍️ 博多運河城</h3>
-                    <div class="sub-details">
-                        **攻略：** 欣賞定時的水舞表演。
-                        <a class="nav-button" href="https://www.google.com/maps/search/?api=1&query=博多運河城" target="_blank">導航</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="schedule-card">
-                <div class="time">住</div>
-                <div class="details">
-                    <h3>🏨 S-Peria Hotel Hakata</h3>
-                    <div class="sub-details">
-                        <span class="tag tag-stay">住宿/含早</span>
-                        <a class="nav-button" href="https://maps.app.goo.gl/RvbcyMM1YZcVrR2n7" target="_blank">導航</a>
-                    </div>
-                </div>
-            </div>
+<div class="container">
+    
+    <div id="hotels" class="tab-content active">
+        <h3>🏠 住宿快速查找</h3>
+        
+        <div class="hotel-card">
+            <div class="hotel-name">Rome: Dolce Vita Holidays Home</div>
+            <div class="info-row">📅 2/19 - 2/23</div>
+            <div class="info-row">📍 Via Belisario, 8, Rome, 00187</div>
+            <a href="tel:+393463696746" class="btn btn-call">📞 撥打房東</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Via+Belisario+8+Rome" class="btn btn-map">🗺️ 地圖導航</a>
         </div>
 
-        <div id="D2" class="tab-content">
-            <div class="day-header-card">
-                <div class="day-title">1 月 2 日 (二) - 別府/由布院</div>
-                <div class="weather-info">
-                    <span>別府/由布院 | 陰轉晴</span>
-                    <span>預計 3/7°C</span>
-                </div>
-            </div>
-
-            <div class="schedule-card">
-                <div class="time">11:00</div>
-                <div class="details">
-                    <h3>🦁 九州野生動物園</h3>
-                    <div class="sub-details">
-                        <a class="nav-button" href="https://www.google.com/maps/search/?api=1&query=九州野生動物園" target="_blank">導航</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="schedule-card">
-                <div class="time">13:00</div>
-                <div class="details">
-                    <h3>♨️ 別府地獄谷 (血池/海地獄)</h3>
-                    <div class="sub-details">
-                        <span class="tag tag-food">必吃</span> 地獄蒸布丁、溫泉蛋
-                        <a class="nav-button" href="https://www.google.com/maps/search/?api=1&query=別府地獄谷" target="_blank">導航</a>
-                    </div>
-                </div>
-            </div>
-
-             <div class="schedule-card">
-                <div class="time"></div>
-                <div class="details">
-                    <h3>🌄 狹霧台上展望所</h3>
-                    <div class="sub-details">
-                        俯瞰由布院盆地與群山
-                        <a class="nav-button" href="https://www.google.com/maps/search/?api=1&query=狹霧台上展望所" target="_blank">導航</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="schedule-card">
-                <div class="time">15:00</div>
-                <div class="details">
-                    <h3>🚶 由布院/湯之坪街道</h3>
-                    <div class="sub-details">
-                        <span class="tag tag-food">必買</span> B-speak 瑞士卷 (早點排隊!)
-                    </div>
-                </div>
-            </div>
-
-            <div class="schedule-card">
-                <div class="time">16:00</div>
-                <div class="details">
-                    <h3>🏡 湯布院童話村</h3>
-                    <div class="sub-details">
-                        英國風童話村莊
-                        <a class="nav-button" href="https://www.google.com/maps/search/?api=1&query=湯布院童話村" target="_blank">導航</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="schedule-card">
-                <div class="time">住</div>
-                <div class="details">
-                    <h3>🏨 花之湯旅館 Oyado Hananoyu</h3>
-                    <div class="sub-details">
-                        <span class="tag tag-stay">住宿/溫泉</span>
-                        **重要提醒：** <span style="color:#e74c3c;">6 點前要 check in！</span>
-                        <a class="nav-button" href="https://maps.app.goo.gl/1Pcmc8nfcg1o3Wyj7" target="_blank">導航</a>
-                    </div>
-                </div>
-            </div>
+        <div class="hotel-card">
+            <div class="hotel-name">Montepulciano: Agriturismo La Terra</div>
+            <div class="info-row">📅 2/23 - 2/24</div>
+            <div class="info-row">📍 Via di Petrignano, 2, 53045</div>
+            <a href="tel:+393482301275" class="btn btn-call">📞 撥打房東</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Agriturismo+La+Terra+Montepulciano" class="btn btn-map">🗺️ 地圖導航</a>
         </div>
 
-        <div id="D3" class="tab-content">
-            <div class="day-header-card">
-                <div class="day-title">1 月 3 日 (三) - 阿蘇</div>
-                <div class="weather-info">
-                    <span>阿蘇 | 多雲</span>
-                    <span>預計 -2/5°C (注意保暖)</span>
-                </div>
-            </div>
-            
-            <div class="schedule-card">
-                <div class="time">11:00</div>
-                <div class="details">
-                    <h3>⛩️ 上色見熊野座神社</h3>
-                    <div class="sub-details">
-                        <span class="tag tag-info">攻略</span> 通往異世界的長石階
-                        <a class="nav-button" href="https://www.google.com/maps/search/?api=1&query=上色見熊野座神社" target="_blank">導航</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="schedule-card">
-                <div class="time">12:30</div>
-                <div class="details">
-                    <h3>🌋 阿蘇中岳火山口</h3>
-                    <div class="sub-details">
-                        <span class="tag tag-info">重要</span> 需確認當日火山瓦斯濃度。
-                        <a class="nav-button" href="https://www.google.com/maps/search/?api=1&query=阿蘇中岳火山口" target="_blank">導航</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="schedule-card">
-                <div class="time">14:00</div>
-                <div class="details">
-                    <h3>🐴 草千里之濱</h3>
-                    <div class="sub-details">
-                        可眺望火山口
-                        <a class="nav-button" href="https://www.google.com/maps/search/?api=1&query=草千里之濱" target="_blank">導航</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="schedule-card">
-                <div class="time">16:00</div>
-                <div class="details">
-                    <h3>🛒 Ebisupana Aso 採購晚餐</h3>
-                    <div class="sub-details">
-                        採買 BBQ 食材
-                        <a class="nav-button" href="https://www.google.com/maps/search/?api=1&query=Ebisupana+Aso" target="_blank">導航</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="schedule-card">
-                <div class="time">住</div>
-                <div class="details">
-                    <h3>🏡 藤のヴィラ Fujino Villa (獨棟木屋)</h3>
-                    <div class="sub-details">
-                        <span class="tag tag-stay">住宿/自煮</span>
-                        **重要預約代號：** <span style="font-weight: bold; color: #e74c3c;">密碼 0325</span>
-                        <a class="nav-button" href="https://maps.app.goo.gl/1pHoQPQksPhkYqfg9" target="_blank">導航</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="D4" class="tab-content">
-            <div class="day-header-card">
-                <div class="day-title">1 月 4 日 (四) - 高千穗</div>
-                <div class="weather-info">
-                    <span>高千穗 | 小雨轉陰</span>
-                    <span>預計 1/6°C</span>
-                </div>
-            </div>
-
-            <div class="schedule-card">
-                <div class="time">10:00</div>
-                <div class="details">
-                    <h3>🚁 阿蘇山ヘリコプター遊覧飛行</h3>
-                    <div class="sub-details">
-                        (地點需確認)
-                    </div>
-                </div>
-            </div>
-
-            <div class="schedule-card">
-                <div class="time">14:00</div>
-                <div class="details">
-                    <h3>🚂 高千穗小火車 (高千穗線)</h3>
-                    <div class="sub-details">
-                        <span class="tag tag-info">攻略</span> 需提前線上預約。
-                        <a class="nav-button" href="https://www.google.com/maps/search/?api=1&query=高千穗小火車" target="_blank">導航</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="schedule-card">
-                <div class="time">15:30</div>
-                <div class="details">
-                    <h3>⛩️ 天安河原</h3>
-                    <div class="sub-details">
-                        神秘的眾神聚集地
-                        <a class="nav-button" href="https://www.google.com/maps/search/?api=1&query=天安河原" target="_blank">導航</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="schedule-card">
-                <div class="time">住</div>
-                <div class="details">
-                    <h3>🏨 Hotel Takachiho</h3>
-                    <div class="sub-details">
-                        <span class="tag tag-stay">住宿/含早</span>
-                        <a class="nav-button" href="https://maps.app.goo.gl/Ht4Nd6fCEJpy7hEj7" target="_blank">導航</a>
-                    </div>
-                </div>
-            </div>
+        <div class="hotel-card" style="border-left-color: #9b59b6;">
+            <div class="hotel-name">Florence: Chiara Five Senses</div>
+            <div class="info-row">📅 2/25 - 2/28</div>
+            <div class="info-row">📍 Via Chiara, 2, Florence, 50123</div>
+            <a href="tel:+393288605144" class="btn btn-call">📞 撥打房東</a>
+            <a href="https://www.google.com/maps/search/?api=1&query=Via+Chiara+2+Florence" class="btn btn-map">🗺️ 地圖導航</a>
         </div>
         
-        <div id="D5" class="tab-content">
-            <div class="day-header-card">
-                <div class="day-title">1 月 5 日 (五) - 高千穗/返回福岡</div>
-                <div class="weather-info">
-                    <span>福岡 | 多雲轉晴</span>
-                    <span>預計 4/9°C</span>
-                </div>
-            </div>
-
-            <div class="schedule-card">
-                <div class="time">08:30</div>
-                <div class="details">
-                    <h3>🍽️ 享用早餐</h3>
-                    <div class="sub-details">
-                        需 8:30 前用餐完畢。
-                    </div>
-                </div>
-            </div>
-
-            <div class="schedule-card">
-                <div class="time">11:00</div>
-                <div class="details">
-                    <h3>🛶 高千穗划船</h3>
-                    <div class="sub-details">
-                        <span class="tag tag-info">攻略</span> 建議提早抵達預約，需視天氣狀況 (雨天/水位高可能停駛)。
-                        <a class="nav-button" href="https://maps.app.goo.gl/TUSDDZpBvEcLFwSw5" target="_blank">導航</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="schedule-card">
-                <div class="time"></div>
-                <div class="details">
-                    <h3>⛩️ 太宰府天滿宮</h3>
-                    <div class="sub-details">
-                        <span class="tag tag-food">必吃</span> 梅枝餅
-                        <a class="nav-button" href="https://www.google.com/maps/search/?api=1&query=太宰府" target="_blank">導航</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="schedule-card">
-                <div class="time"></div>
-                <div class="details">
-                    <h3>🛍️ 天神LOFT/購物</h3>
-                    <div class="sub-details">
-                        買明太子麵包 (地點需確認)
-                        <a class="nav-button" href="https://www.google.com/maps/search/?api=1&query=天神LOFT" target="_blank">導航</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="schedule-card">
-                <div class="time">19:00</div>
-                <div class="details">
-                    <h3>🥩 燒肉 Nikuichi (Yakuin Store)</h3>
-                    <div class="sub-details">
-                        <span class="tag tag-food">已預訂</span> <span style="font-weight: bold; color: #c0392b;">必點菜單：特選和牛</span>
-                        <a class="nav-button" href="https://www.google.com/maps/search/?api=1&query=燒肉Nikuichi+Yakuin+Store" target="_blank">導航</a>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="schedule-card">
-                <div class="time">住</div>
-                <div class="details">
-                    <h3>🏨 Quintessa Hotel Fukuoka Tenjin Minami</h3>
-                    <div class="sub-details">
-                        <span class="tag tag-stay">住宿</span>
-                        <a class="nav-button" href="https://maps.app.goo.gl/RRpuQhkHe3HXsVPy7" target="_blank">導航</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div id="D6" class="tab-content">
-            <div class="day-header-card">
-                <div class="day-title">1 月 6 日 (六) - 返程</div>
-                <div class="weather-info">
-                    <span>福岡 | 晴</span>
-                    <span>預計 5/10°C</span>
-                </div>
-            </div>
-
-            <div class="schedule-card">
-                <div class="time">08:30</div>
-                <div class="details">
-                    <h3>🚗 還車手續</h3>
-                    <div class="sub-details">
-                        請確認油箱已加滿。
-                    </div>
-                </div>
-            </div>
-            
-            <div class="schedule-card">
-                <div class="time">09:00</div>
-                <div class="details">
-                    <h3>✈️ 抵達機場</h3>
-                </div>
-            </div>
-
-            <div class="schedule-card">
-                <div class="time">11:40</div>
-                <div class="details">
-                    <h3>🛫 搭乘飛機</h3>
-                </div>
-            </div>
-        </div>
-
-        <div id="Expense" class="tab-content expense-section">
-            <h2>💰 九州之旅 - 記帳/預算表</h2>
-            <p style="color: #777; font-size: 0.9rem;">提示：您可以在瀏覽器中直接點擊表格欄位進行編輯 (但不會自動儲存，需手動記錄)。</p>
-
-            <h3>1. 基礎支出概覽 (JPY)</h3>
-            <table class="expense-table">
-                <thead>
-                    <tr><th>項目</th><th>預算 (JPY)</th><th>實際花費 (JPY)</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td>機票</td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
-                    <tr><td>住宿總額</td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
-                    <tr><td>租車/油資/過路費</td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
-                    <tr class="total-row"><td>總計 (基礎)</td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
-                </tbody>
-            </table>
-
-            <h3>2. 每日活動/餐飲預算</h3>
-            <table class="expense-table">
-                <thead>
-                    <tr><th>日期</th><th>項目</th><th>預計花費 (JPY)</th><th>實際花費 (JPY)</th></tr>
-                </thead>
-                <tbody>
-                    <tr><td>1/1</td><td>購物/餐飲 (福岡)</td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
-                    <tr><td>1/2</td><td>門票 (動物園/地獄谷)</td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
-                    <tr><td>1/3</td><td>晚餐採購 (阿蘇)</td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
-                    <tr><td>1/4</td><td>直升機/小火車/門票</td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
-                    <tr><td>1/5</td><td>划船/梅枝餅/購物/燒肉</td><td contenteditable="true"></td><td contenteditable="true"></td></tr>
-                </tbody>
-            </table>
-        </div>
-
+        <p style="text-align:center; color:#999; font-size:0.8em;">(其餘住宿資訊已整合進系統)</p>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const tabs = document.querySelectorAll('.tab');
-            const contents = document.querySelectorAll('.tab-content');
+    <div id="schedule" class="tab-content">
+        <h3>📅 重點預約行程</h3>
+        <div class="day-item"><span class="day-date">2/21 09:00</span> 梵蒂岡博物館 <span class="booking-tag">已訂票</span></div>
+        <div class="day-item"><span class="day-date">2/26 08:30</span> 學院美術館 (大衛像) <span class="booking-tag">已訂票</span></div>
+        <div class="day-item"><span class="day-date">2/27 09:00</span> 烏菲茲美術館 <span class="booking-tag">已訂票</span></div>
+        <div class="day-item"><span class="day-date">3/03 08:15</span> 最後的晚餐 <span class="booking-tag">已預約</span></div>
+        <hr>
+        <p>完整每日路線請參考 PDF 第 4-13 頁</p>
+    </div>
 
-            function changeTab(tabId) {
-                // 移除所有 Tab 的 active class
-                tabs.forEach(tab => tab.classList.remove('active'));
-                
-                // 隱藏所有內容
-                contents.forEach(content => content.classList.remove('active'));
+    <div id="wiki" class="tab-content">
+        <h3>🎨 文藝復興三傑</h3>
+        <div class="hotel-card">
+            <strong>達文西 (Da Vinci)</strong>
+            <p style="font-size:0.9em;">關鍵字：全才、觀察者、最後的晚餐。他認為繪畫是科學的一部分。</p>
+        </div>
+        <div class="hotel-card">
+            <strong>米開朗基羅 (Michelangelo)</strong>
+            <p style="font-size:0.9em;">關鍵字：雕刻靈魂、大衛像、西斯汀禮拜堂。他覺得雕刻是把困在石頭裡的靈魂解放。</p>
+        </div>
+    </div>
 
-                // 激活當前選中的 Tab
-                const activeTab = document.querySelector(`.tab[data-tab="${tabId}"]`);
-                if (activeTab) {
-                    activeTab.classList.add('active');
-                }
+</div>
 
-                // 顯示對應的內容
-                const activeContent = document.getElementById(tabId);
-                if (activeContent) {
-                    activeContent.classList.add('active');
-                }
-            }
+<nav>
+    <div class="nav-item active" onclick="showTab('hotels', this)">住宿</div>
+    <div class="nav-item" onclick="showTab('schedule', this)">行程</div>
+    <div class="nav-item" onclick="showTab('wiki', this)">百科</div>
+</nav>
 
-            // 設置點擊事件
-            tabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    const tabId = tab.getAttribute('data-tab');
-                    changeTab(tabId);
-                });
-            });
-
-            // 默認顯示 D1
-            changeTab('D1');
-        });
-    </script>
+<script>
+    function showTab(id, el) {
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        el.classList.add('active');
+        window.scrollTo(0,0);
+    }
+</script>
 
 </body>
 </html>
-
