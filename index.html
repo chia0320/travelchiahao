@@ -3,117 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>義大利文藝復興之旅 2026</title>
+    <title>義大利 14 天文藝復興之旅</title>
     <style>
-        :root {
-            --primary: #2c3e50;
-            --accent: #e67e22;
-            --bg: #f8f9fa;
-            --card: #ffffff;
-        }
-        body { font-family: -apple-system, "Noto Sans TC", sans-serif; background: var(--bg); margin: 0; padding-bottom: 70px; }
-        header { background: var(--primary); color: white; padding: 20px; text-align: center; }
-        .container { padding: 15px; }
+        :root { --primary: #1a2a6c; --accent: #f2a154; --bg: #f4f7f6; --text: #333; }
+        body { font-family: -apple-system, "Segoe UI", "Noto Sans TC", sans-serif; background: var(--bg); margin: 0; color: var(--text); line-height: 1.6; }
+        header { background: linear-gradient(to right, #1a2a6c, #b21f1f, #fdbb2d); color: white; padding: 25px 15px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
         
-        /* 住宿卡片樣式 */
-        .hotel-card { background: var(--card); border-radius: 12px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border-left: 5px solid var(--accent); }
-        .hotel-name { font-weight: bold; font-size: 1.1em; color: var(--primary); }
-        .info-row { margin: 8px 0; font-size: 0.9em; display: flex; align-items: center; }
-        .btn { display: inline-block; background: #eee; padding: 8px 12px; border-radius: 6px; text-decoration: none; color: #333; margin-top: 10px; font-size: 0.85em; font-weight: 500; }
-        .btn-call { background: #27ae60; color: white; margin-right: 5px; }
-        .btn-map { background: #3498db; color: white; }
+        /* 導航列 */
+        nav { position: sticky; top: 0; background: white; display: flex; justify-content: space-around; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 1000; }
+        .nav-item { flex: 1; text-align: center; padding: 15px 0; font-weight: bold; cursor: pointer; color: #777; border-bottom: 3px solid transparent; transition: 0.3s; }
+        .nav-item.active { color: var(--primary); border-bottom: 3px solid var(--primary); }
 
-        /* 行程標記 */
-        .booking-tag { background: #e74c3c; color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-left: 5px; }
-
-        /* 分頁切換 */
-        .tab-content { display: none; }
+        .container { padding: 15px; max-width: 600px; margin: auto; }
+        .tab-content { display: none; animation: fadeIn 0.4s; }
         .tab-content.active { display: block; }
-        nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 100; }
-        nav div { flex: 1; text-align: center; padding: 15px; font-size: 0.9em; cursor: pointer; color: #7f8c8d; }
-        nav div.active { color: var(--accent); font-weight: bold; border-top: 3px solid var(--accent); }
+
+        /* 航班樣式 */
+        .flight-section { background: white; border-radius: 12px; padding: 15px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .flight-title { border-left: 4px solid var(--primary); padding-left: 10px; margin-bottom: 10px; font-weight: bold; }
+        .flight-row { display: flex; justify-content: space-between; font-size: 0.9em; padding: 8px 0; border-bottom: 1px dashed #eee; }
+
+        /* 行程樣式 */
+        .day-card { background: white; border-radius: 15px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .day-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--accent); margin-bottom: 15px; padding-bottom: 5px; }
+        .day-title { font-size: 1.2em; font-weight: bold; color: var(--primary); }
         
-        /* 日程表 */
-        .day-item { background: white; padding: 12px; margin-bottom: 10px; border-radius: 8px; }
-        .day-date { font-weight: bold; color: var(--accent); margin-right: 10px; }
+        .spot-item { margin: 15px 0; position: relative; padding-left: 20px; border-left: 2px solid #ddd; }
+        .spot-name { font-weight: bold; cursor: pointer; color: #2980b9; display: flex; align-items: center; }
+        .spot-name::before { content: '📍'; position: absolute; left: -12px; background: var(--bg); }
+        .spot-intro { display: none; font-size: 0.85em; background: #f9f9f9; padding: 10px; border-radius: 8px; margin-top: 5px; color: #555; }
+        
+        .booking-alert { background: #fff3cd; border: 1px solid #ffeeba; padding: 8px; border-radius: 6px; font-size: 0.85em; margin: 10px 0; color: #856404; font-weight: bold; }
+        
+        .hotel-link { display: inline-block; background: #e8f4fd; color: #2980b9; padding: 10px 15px; border-radius: 8px; text-decoration: none; font-size: 0.9em; margin-top: 10px; width: 100%; text-align: center; box-sizing: border-box; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>🇮🇹 Italy 2026</h1>
-    <small>FEB 19 - MAR 05</small>
+    <h1>義大利 14 天文藝復興之旅</h1>
+    <div>2026.02.19 - 03.05</div>
 </header>
 
-<div class="container">
-    
-    <div id="hotels" class="tab-content active">
-        <h3>🏠 住宿快速查找</h3>
-        
-        <div class="hotel-card">
-            <div class="hotel-name">Rome: Dolce Vita Holidays Home</div>
-            <div class="info-row">📅 2/19 - 2/23</div>
-            <div class="info-row">📍 Via Belisario, 8, Rome, 00187</div>
-            <a href="tel:+393463696746" class="btn btn-call">📞 撥打房東</a>
-            <a href="https://www.google.com/maps/search/?api=1&query=Via+Belisario+8+Rome" class="btn btn-map">🗺️ 地圖導航</a>
-        </div>
-
-        <div class="hotel-card">
-            <div class="hotel-name">Montepulciano: Agriturismo La Terra</div>
-            <div class="info-row">📅 2/23 - 2/24</div>
-            <div class="info-row">📍 Via di Petrignano, 2, 53045</div>
-            <a href="tel:+393482301275" class="btn btn-call">📞 撥打房東</a>
-            <a href="https://www.google.com/maps/search/?api=1&query=Agriturismo+La+Terra+Montepulciano" class="btn btn-map">🗺️ 地圖導航</a>
-        </div>
-
-        <div class="hotel-card" style="border-left-color: #9b59b6;">
-            <div class="hotel-name">Florence: Chiara Five Senses</div>
-            <div class="info-row">📅 2/25 - 2/28</div>
-            <div class="info-row">📍 Via Chiara, 2, Florence, 50123</div>
-            <a href="tel:+393288605144" class="btn btn-call">📞 撥打房東</a>
-            <a href="https://www.google.com/maps/search/?api=1&query=Via+Chiara+2+Florence" class="btn btn-map">🗺️ 地圖導航</a>
-        </div>
-        
-        <p style="text-align:center; color:#999; font-size:0.8em;">(其餘住宿資訊已整合進系統)</p>
-    </div>
-
-    <div id="schedule" class="tab-content">
-        <h3>📅 重點預約行程</h3>
-        <div class="day-item"><span class="day-date">2/21 09:00</span> 梵蒂岡博物館 <span class="booking-tag">已訂票</span></div>
-        <div class="day-item"><span class="day-date">2/26 08:30</span> 學院美術館 (大衛像) <span class="booking-tag">已訂票</span></div>
-        <div class="day-item"><span class="day-date">2/27 09:00</span> 烏菲茲美術館 <span class="booking-tag">已訂票</span></div>
-        <div class="day-item"><span class="day-date">3/03 08:15</span> 最後的晚餐 <span class="booking-tag">已預約</span></div>
-        <hr>
-        <p>完整每日路線請參考 PDF 第 4-13 頁</p>
-    </div>
-
-    <div id="wiki" class="tab-content">
-        <h3>🎨 文藝復興三傑</h3>
-        <div class="hotel-card">
-            <strong>達文西 (Da Vinci)</strong>
-            <p style="font-size:0.9em;">關鍵字：全才、觀察者、最後的晚餐。他認為繪畫是科學的一部分。</p>
-        </div>
-        <div class="hotel-card">
-            <strong>米開朗基羅 (Michelangelo)</strong>
-            <p style="font-size:0.9em;">關鍵字：雕刻靈魂、大衛像、西斯汀禮拜堂。他覺得雕刻是把困在石頭裡的靈魂解放。</p>
-        </div>
-    </div>
-
-</div>
-
 <nav>
-    <div class="nav-item active" onclick="showTab('hotels', this)">住宿</div>
-    <div class="nav-item" onclick="showTab('schedule', this)">行程</div>
-    <div class="nav-item" onclick="showTab('wiki', this)">百科</div>
+    <div class="nav-item active" onclick="switchTab('flights', this)">✈️ 航班資訊</div>
+    <div class="nav-item" onclick="switchTab('itinerary', this)">📅 每日行程</div>
 </nav>
 
+<div class="container">
+    <div id="flights" class="tab-content active">
+        <div class="flight-section">
+            <div class="flight-title">👤 佳豪航班 (阿聯酋)</div>
+            <div class="flight-row"><span>2/19 EK387</span> <span>00:20 TPE → 06:15 DXB</span></div>
+            <div class="flight-row"><span>2/19 EK97</span> <span>08:55 DXB → 12:40 FCO</span></div>
+            <div class="flight-row"><span>3/04 EK206</span> <span>13:55 MXP → 23:00 DXB</span></div>
+            <div class="flight-row"><span>3/05 EK366</span> <span>03:40 DXB → 15:35 TPE</span></div>
+        </div>
+
+        <div class="flight-section">
+            <div class="flight-title">👥 爸媽航班 (阿提哈德/阿聯酋)</div>
+            <div class="flight-row"><span>2/19 EY899</span> <span>18:20 TPE → 00:05 AUH</span></div>
+            <div class="flight-row"><span>2/20 EK85</span> <span>02:10 AUH → 05:40 FCO</span></div>
+            <div class="flight-row"><span>3/04 EY82</span> <span>10:25 MXP → 19:30 AUH</span></div>
+            <div class="flight-row"><span>3/05 EY898</span> <span>20:55 AUH → 08:30 TPE</span></div>
+        </div>
+    </div>
+
+    <div id="itinerary" class="tab-content">
+        
+        <div class="day-card">
+            <div class="day-header"><span class="day-title">Day 1-2 抵達羅馬</span><span>2/19-2/20</span></div>
+            <div class="spot-item">
+                <div class="spot-name" onclick="toggleIntro(this)">抵達羅馬機場 (FCO)</div>
+                <div class="spot-intro">搭乘 Leonardo Express 前往市區 Termini 車站。</div>
+            </div>
+            <div class="spot-item">
+                <div class="spot-name" onclick="toggleIntro(this)">破船噴泉 & 西班牙階梯</div>
+                <div class="spot-intro">貝尼尼的作品，因一艘破舊木船帶來的靈感。西班牙階梯是《羅馬假期》經典場景。</div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=Via+Belisario+8+Rome" class="hotel-link">🏨 導航至羅馬住宿：Dolce Vita</a>
+        </div>
+
+        <div class="day-card">
+            <div class="day-header"><span class="day-title">Day 3 梵蒂岡巡禮</span><span>2/21</span></div>
+            <div class="booking-alert">⚠️ 預約 09:00 梵蒂岡博物館 (已訂)</div>
+            <div class="spot-item">
+                <div class="spot-name" onclick="toggleIntro(this)">梵蒂岡博物館 & 西斯汀禮拜堂</div>
+                <div class="spot-intro">必看：拉斐爾《雅典學院》、米開朗基羅《創世紀》與《最後的審判》。</div>
+            </div>
+            <div class="spot-item">
+                <div class="spot-name" onclick="toggleIntro(this)">聖彼得大教堂</div>
+                <div class="spot-intro">世界上最大的教堂，必看米開朗基羅 24 歲時的作品《聖殤》。</div>
+            </div>
+            <div class="spot-item">
+                <div class="spot-name" onclick="toggleIntro(this)">聖天使堡</div>
+                <div class="spot-intro">原本是哈德良皇帝的陵墓，後來成為教宗的避難所。</div>
+            </div>
+        </div>
+
+        <div class="day-card">
+            <div class="day-header"><span class="day-title">Day 8 佛羅倫斯藝術</span><span>2/26</span></div>
+            <div class="booking-alert">⚠️ 預約 08:30 學院美術館 (大衛像)</div>
+            <div class="spot-item">
+                <div class="spot-name" onclick="toggleIntro(this)">學院美術館</div>
+                <div class="spot-intro">擁有最正統的《大衛像》，展現了米開朗基羅對人體肌肉線條的極致掌握。</div>
+            </div>
+            <div class="spot-item">
+                <div class="spot-name" onclick="toggleIntro(this)">聖母百花大教堂</div>
+                <div class="spot-intro">佛羅倫斯的地標，擁有全世界最大的磚造穹頂。</div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=Via+Chiara+2+Florence" class="hotel-link">🏨 導航至佛羅倫斯住宿：Chiara Five Senses</a>
+        </div>
+
+        <div class="day-card">
+            <div class="day-header"><span class="day-title">Day 13 米蘭經典</span><span>3/03</span></div>
+            <div class="booking-alert">⚠️ 預約 08:15 最後的晚餐 (已預約)</div>
+            <div class="spot-item">
+                <div class="spot-name" onclick="toggleIntro(this)">恩寵聖母教堂 (最後的晚餐)</div>
+                <div class="spot-intro">達文西最著名的壁畫。需極度保持安靜且限時參觀。</div>
+            </div>
+            <div class="spot-item">
+                <div class="spot-name" onclick="toggleIntro(this)">米蘭大教堂</div>
+                <div class="spot-intro">世界最大的哥德式建築之一，有無數的尖塔和雕像。</div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=Via+Gaspare+Spontini+11+Milan" class="hotel-link">🏨 導航至米蘭住宿：Spontini Apartment</a>
+        </div>
+
+    </div>
+</div>
+
 <script>
-    function showTab(id, el) {
+    function switchTab(tabId, el) {
         document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
         document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
+        document.getElementById(tabId).classList.add('active');
         el.classList.add('active');
         window.scrollTo(0,0);
+    }
+
+    function toggleIntro(el) {
+        const intro = el.nextElementSibling;
+        const isVisible = intro.style.display === 'block';
+        intro.style.display = isVisible ? 'none' : 'block';
     }
 </script>
 
