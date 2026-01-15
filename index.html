@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>義大利 14 天完整行程表</title>
+    <title>義大利 14 天完整行程與導覽</title>
     <style>
         :root { --primary: #1a2a6c; --accent: #e67e22; --bg: #f4f7f6; }
         body { font-family: -apple-system, "Noto Sans TC", sans-serif; background: var(--bg); margin: 0; padding-bottom: 80px; }
@@ -17,116 +17,127 @@
         .tab-content.active { display: block; }
 
         .card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .day-card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 15px; border-top: 4px solid var(--accent); }
+        .day-card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 15px; border-top: 4px solid var(--accent); position: relative; }
         .day-info { font-weight: bold; font-size: 1.1em; color: var(--primary); display: flex; justify-content: space-between; margin-bottom: 10px; }
         .booking-tag { background: #e74c3c; color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.8em; margin-bottom: 10px; display: inline-block; }
         
         .spot { border-bottom: 1px solid #eee; padding: 10px 0; }
-        .spot-time { color: var(--accent); font-weight: bold; font-size: 0.9em; margin-right: 5px; }
+        .spot-time { color: var(--accent); font-weight: bold; font-size: 0.85em; margin-right: 5px; }
         .spot-name { color: #2980b9; cursor: pointer; display: flex; align-items: center; font-weight: 500; }
         .spot-name::before { content: '📍'; margin-right: 8px; font-size: 0.9em; }
         .spot-intro { display: none; font-size: 0.9em; color: #666; background: #f9f9f9; padding: 10px; border-radius: 5px; margin-top: 5px; }
         
-        .btn-group { display: flex; gap: 5px; margin-top: 10px; flex-wrap: wrap; }
-        .btn { flex: 1; min-width: 100px; text-align: center; padding: 8px; border-radius: 6px; text-decoration: none; font-size: 0.85em; font-weight: bold; }
-        .btn-hotel { background: #e8f4fd; color: #2980b9; }
-        .btn-park { background: #fef5e7; color: #d35400; }
+        .btn-group { display: flex; gap: 8px; margin-top: 15px; flex-wrap: wrap; }
+        .btn { flex: 1; min-width: 120px; text-align: center; padding: 10px; border-radius: 8px; text-decoration: none; font-size: 0.85em; font-weight: bold; display: flex; align-items: center; justify-content: center; }
+        .btn-hotel { background: #2c3e50; color: white; }
+        .btn-park { background: #f39c12; color: white; }
+        .btn::before { margin-right: 5px; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>🇮🇹 義大利 14 天完整行程</h1>
+    <h1>🇮🇹 2026 義大利行程表</h1>
     <div id="countdown" style="font-size: 0.8em; margin-top: 5px;"></div>
 </header>
 
 <nav>
-    <div class="nav-item active" onclick="switchTab('flights', this)">✈️ 航班</div>
-    <div class="nav-item" onclick="switchTab('itinerary', this)">📅 行程</div>
+    <div class="nav-item active" onclick="switchTab('flights', this)">✈️ 航班資訊</div>
+    <div class="nav-item" onclick="switchTab('itinerary', this)">📅 每日行程</div>
 </nav>
 
 <div class="container">
     <div id="flights" class="tab-content active">
-        <div class="card"><strong>佳豪航班</strong><br>2/19 12:40 抵達 FCO<br>3/04 13:55 MXP 出發</div>
-        <div class="card"><strong>爸媽航班</strong><br>2/20 05:40 抵達 FCO<br>3/04 10:15 MXP 出發</div>
+        <div class="card">
+            <div style="font-weight:bold; color:var(--primary); margin-bottom:10px;">👤 佳豪 (阿聯酋)</div>
+            <p style="font-size:0.9em; margin:5px 0;">去程：2/19 12:40 抵達 FCO</p>
+            <p style="font-size:0.9em; margin:5px 0;">回程：3/04 13:55 MXP 出發</p>
+        </div>
+        <div class="card">
+            <div style="font-weight:bold; color:#d4af37; margin-bottom:10px;">👥 爸媽 (阿提哈德)</div>
+            <p style="font-size:0.9em; margin:5px 0;">去程：2/20 05:40 抵達 FCO</p>
+            <p style="font-size:0.9em; margin:5px 0;">回程：3/04 10:25 MXP 出發</p>
+        </div>
     </div>
 
     <div id="itinerary" class="tab-content">
         
         <div class="day-card">
             <div class="day-info"><span>2/19-20</span><span>羅馬</span></div>
-            <div class="spot"><div class="spot-name" onclick="t(this)">抵達羅馬 & 景點巡禮</div><div class="spot-intro">含：特雷維噴泉、萬神殿、納沃納廣場、鮮花廣場。</div></div>
-            <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=Via+Belisario+8+Rome" class="btn btn-hotel">🏨 羅馬住宿導航</a></div>
+            <div class="spot"><div class="spot-name" onclick="t(this)">羅馬市區 (噴泉/萬神殿)</div><div class="spot-intro">特雷維噴泉、萬神殿、納沃納廣場。</div></div>
+            <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=Via+Belisario+8+Rome" class="btn btn-hotel">🏨 羅馬飯店導航</a></div>
         </div>
 
         <div class="day-card">
             <div class="day-info"><span>2/21</span><span>梵蒂岡</span></div>
             <span class="booking-tag">已訂 09:00 博物館</span>
-            <div class="spot"><div class="spot-name" onclick="t(this)">梵蒂岡博物館 / 聖彼得大教堂</div><div class="spot-intro">必看米開朗基羅《聖殤》與西斯汀禮拜堂壁畫。</div></div>
+            <div class="spot"><div class="spot-name" onclick="t(this)">梵蒂岡博物館 & 聖彼得大教堂</div><div class="spot-intro">必看：拉斐爾《雅典學院》、米開朗基羅《聖殤》。</div></div>
+            <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=Via+Belisario+8+Rome" class="btn btn-hotel">🏨 續住羅馬飯店</a></div>
         </div>
 
         <div class="day-card">
-            <div class="day-info"><span>2/22</span><span>羅馬</span></div>
-            <div class="spot"><div class="spot-name" onclick="t(this)">古羅馬遺跡巡禮</div><div class="spot-intro">行程：競技場、凱旋門、古羅馬廣場、卡拉卡拉浴場。</div></div>
+            <div class="day-info"><span>2/22</span><span>羅馬古蹟</span></div>
+            <div class="spot"><div class="spot-name" onclick="t(this)">競技場 & 古羅馬廣場</div><div class="spot-intro">含凱旋門、卡拉卡拉浴場、農夫市集。</div></div>
+            <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=Via+Belisario+8+Rome" class="btn btn-hotel">🏨 續住羅馬飯店</a></div>
         </div>
 
         <div class="day-card">
-            <div class="day-info"><span>2/23</span><span>托斯卡尼 (自駕)</span></div>
-            <div class="spot"><span class="spot-time">09:00</span><div class="spot-name" onclick="t(this)">羅馬租車出發</div><div class="spot-intro">開始自駕旅程，前往托斯卡尼山城。</div></div>
-            <div class="spot"><span class="spot-time">11:00</span><div class="spot-name" onclick="t(this)">天空之城 Civita di Bagnoregio</div><div class="spot-intro">建立在火山岩上的絕美小鎮，僅靠一條長橋與外界相連。</div></div>
-            <div class="spot"><span class="spot-time">13:00</span><div class="spot-name" onclick="t(this)">蒙特普齊亞諾 Montepulciano</div><div class="spot-intro">著名的紅酒故鄉，城內充滿中世紀建築與酒窖。</div></div>
+            <div class="day-info"><span>2/23</span><span>托斯卡尼 (租車)</span></div>
+            <div class="spot"><span class="spot-time">11:00</span><div class="spot-name" onclick="t(this)">天空之城 Civita</div><div class="spot-intro">步行長橋進入絕美孤城。</div></div>
+            <div class="spot"><span class="spot-time">13:00</span><div class="spot-name" onclick="t(this)">蒙特普齊亞諾</div><div class="spot-intro">紅酒之鄉。</div></div>
             <div class="btn-group">
                 <a href="https://www.google.com/maps/search/?api=1&query=Civita+di+Bagnoregio+Parking" class="btn btn-park">🚗 天空之城停車</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=Agriturismo+La+Terra+Montepulciano" class="btn btn-hotel">🏡 莊園住宿導航</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=Via+di+Petrignano+2+Montepulciano" class="btn btn-hotel">🏨 莊園飯店導航</a>
             </div>
         </div>
 
         <div class="day-card">
             <div class="day-info"><span>2/24</span><span>托斯卡尼 (山城)</span></div>
-            <div class="spot"><span class="spot-time">11:00</span><div class="spot-name" onclick="t(this)">皮恩札 Pienza</div><div class="spot-intro">被譽為「理想的城市」，以 Pecorino 起司與優雅街道聞名。</div></div>
-            <div class="spot"><span class="spot-time">15:00</span><div class="spot-name" onclick="t(this)">錫耶納 Siena</div><div class="spot-intro">擁有獨特的扇形康波廣場，與佛羅倫斯齊名的古城。</div></div>
+            <div class="spot"><span class="spot-time">11:00</span><div class="spot-name" onclick="t(this)">皮恩札 Pienza</div><div class="spot-intro">理想城市，必買起司。</div></div>
+            <div class="spot"><span class="spot-time">15:00</span><div class="spot-name" onclick="t(this)">錫耶納 Siena</div><div class="spot-intro">扇形廣場。</div></div>
             <div class="btn-group">
-                <a href="https://www.google.com/maps/search/?api=1&query=Pienza+Parking" class="btn btn-park">🚗 皮恩札停車</a>
                 <a href="https://www.google.com/maps/search/?api=1&query=Siena+Parking" class="btn btn-park">🚗 錫耶納停車</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=Borgo+San+Luigi" class="btn btn-hotel">🏨 聖路易吉酒店</a>
+                <a href="https://www.google.com/maps/search/?api=1&query=Strada+delle+Cerreta+7+Monteriggioni" class="btn btn-hotel">🏨 聖路易吉酒店</a>
             </div>
         </div>
 
         <div class="day-card">
             <div class="day-info"><span>2/25</span><span>比薩 / 佛羅倫斯</span></div>
-            <div class="spot"><div class="spot-name" onclick="t(this)">比薩斜塔 & Outlet</div><div class="spot-intro">經典斜塔拍照，下午前往 The Mall Outlet 購物。</div></div>
+            <div class="spot"><div class="spot-name" onclick="t(this)">比薩斜塔 & Outlet</div><div class="spot-intro">拍照後前往 The Mall 購物。</div></div>
+            <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=Via+Chiara+2+Florence" class="btn btn-hotel">🏨 佛羅倫斯飯店</a></div>
         </div>
 
         <div class="day-card">
             <div class="day-info"><span>2/26</span><span>佛羅倫斯</span></div>
             <span class="booking-tag">已訂 08:30 學院美術館</span>
-            <div class="spot"><div class="spot-name" onclick="t(this)">大衛像 & 聖母百花大教堂</div><div class="spot-intro">維奇歐橋、香水藥妝店巡禮。</div></div>
-            <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=Via+Chiara+2+Florence" class="btn btn-hotel">🏨 佛羅倫斯住宿</a></div>
+            <div class="spot"><div class="spot-name" onclick="t(this)">大衛像 / 聖母百花大教堂</div><div class="spot-intro">及維奇歐橋。</div></div>
+            <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=Via+Chiara+2+Florence" class="btn btn-hotel">🏨 續住佛羅倫斯</a></div>
         </div>
 
         <div class="day-card">
-            <div class="day-info"><span>2/27</span><span>佛羅倫斯</span></div>
+            <div class="day-info"><span>2/27</span><span>佛羅倫斯美術館</span></div>
             <span class="booking-tag">已訂 09:00 烏菲茲美術館</span>
-            <div class="spot"><div class="spot-name" onclick="t(this)">烏菲茲美術館 & 廣場夕陽</div><div class="spot-intro">欣賞《維納斯的誕生》，傍晚到米開朗基羅廣場看全景。</div></div>
+            <div class="spot"><div class="spot-name" onclick="t(this)">烏菲茲 / 米開朗基羅廣場</div><div class="spot-intro">看夕陽與名畫。</div></div>
+            <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=Via+Chiara+2+Florence" class="btn btn-hotel">🏨 續住佛羅倫斯</a></div>
         </div>
 
         <div class="day-card">
             <div class="day-info"><span>2/28-3/1</span><span>威尼斯</span></div>
-            <div class="spot"><div class="spot-name" onclick="t(this)">威尼斯本島 & 彩色島</div><div class="spot-intro">聖馬可廣場、大運河、布拉諾彩色島。</div></div>
+            <div class="spot"><div class="spot-name" onclick="t(this)">聖馬可廣場 / 彩色島</div><div class="spot-intro">威尼斯本島與離島行程。</div></div>
+            <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=BB+HOTEL+Venezia+Laguna" class="btn btn-hotel">🏨 威尼斯飯店導航</a></div>
         </div>
 
         <div class="day-card">
             <div class="day-info"><span>3/2-3</span><span>米蘭</span></div>
             <span class="booking-tag">已約 08:15 最後的晚餐</span>
-            <div class="spot"><div class="spot-name" onclick="t(this)">最後的晚餐 & 米蘭大教堂</div><div class="spot-intro">米蘭最後購物行程，運河區散步。</div></div>
-            <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=Via+Gaspare+Spontini+11+Milan" class="btn btn-hotel">🏨 米蘭住宿導航</a></div>
+            <div class="spot"><div class="spot-name" onclick="t(this)">米蘭大教堂 / 運河區</div><div class="spot-intro">達文西經典壁畫。</div></div>
+            <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=Via+Gaspare+Spontini+11+Milan" class="btn btn-hotel">🏨 米蘭飯店導航</a></div>
         </div>
 
         <div class="day-card">
             <div class="day-info"><span>3/4</span><span>返程</span></div>
-            <div class="spot">10:15 爸媽 (MXP) / 13:55 佳豪 (MXP)</div>
+            <div class="spot">10:15 爸媽 (EY) / 13:55 佳豪 (EK)</div>
         </div>
-
     </div>
 </div>
 
