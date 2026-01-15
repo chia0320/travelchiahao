@@ -3,140 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>義大利 14 天完整行程與導覽</title>
+    <title>義大利文藝復興之旅 2026</title>
     <style>
-        :root { --primary: #1a2a6c; --accent: #e67e22; --bg: #f4f7f6; }
-        body { font-family: -apple-system, "Noto Sans TC", sans-serif; background: var(--bg); margin: 0; padding-bottom: 80px; }
-        header { background: linear-gradient(135deg, #1a2a6c, #b21f1f); color: white; padding: 20px; text-align: center; }
-        nav { position: sticky; top: 0; background: white; display: flex; box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 100; }
-        .nav-item { flex: 1; text-align: center; padding: 15px 0; font-weight: bold; cursor: pointer; color: #777; }
-        .nav-item.active { color: var(--primary); border-bottom: 3px solid var(--primary); }
+        :root { --italy-green: #008C45; --italy-red: #CD212A; --gold: #D4AF37; --stone: #2C3E50; --bg: #FDFCF0; }
+        body { font-family: "Georgia", "Noto Sans TC", serif; background-color: var(--bg); margin: 0; color: var(--stone); }
+        
+        /* 頁首：義大利風景背景感 */
+        header { 
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?auto=format&fit=crop&w=800&q=80'); /* 義大利風景圖 */
+            background-size: cover; background-position: center;
+            color: white; padding: 40px 20px; text-align: center; border-bottom: 5px solid var(--gold);
+        }
+        
+        nav { position: sticky; top: 0; background: white; display: flex; border-bottom: 2px solid var(--gold); z-index: 1000; }
+        .nav-item { flex: 1; text-align: center; padding: 15px 0; font-weight: bold; cursor: pointer; color: var(--stone); transition: 0.3s; }
+        .nav-item.active { color: var(--italy-green); background: #f9f9f9; box-shadow: inset 0 -4px 0 var(--italy-green); }
 
-        .container { padding: 15px; max-width: 600px; margin: auto; }
+        .container { padding: 20px; max-width: 650px; margin: auto; }
         .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        .tab-content.active { display: block; animation: fadeIn 0.5s; }
 
-        .card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
-        .day-card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 15px; border-top: 4px solid var(--accent); position: relative; }
-        .day-info { font-weight: bold; font-size: 1.1em; color: var(--primary); display: flex; justify-content: space-between; margin-bottom: 10px; }
-        .booking-tag { background: #e74c3c; color: white; padding: 2px 6px; border-radius: 4px; font-size: 0.8em; margin-bottom: 10px; display: inline-block; }
+        /* 卡片設計 */
+        .day-card { 
+            background: white; border-radius: 8px; padding: 20px; margin-bottom: 20px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #eee;
+        }
+        .day-header { border-bottom: 2px solid var(--gold); margin-bottom: 15px; display: flex; justify-content: space-between; align-items: baseline; }
+        .day-title { font-size: 1.3em; font-weight: bold; color: var(--italy-red); }
+
+        /* 景點與飯店按鈕 */
+        .spot { margin: 12px 0; }
+        .spot-name { color: var(--stone); cursor: pointer; font-weight: 600; text-decoration: underline dotted var(--gold); }
+        .spot-intro { display: none; font-size: 0.9em; background: #F9F3E3; padding: 12px; border-radius: 4px; margin-top: 5px; color: #555; }
         
-        .spot { border-bottom: 1px solid #eee; padding: 10px 0; }
-        .spot-time { color: var(--accent); font-weight: bold; font-size: 0.85em; margin-right: 5px; }
-        .spot-name { color: #2980b9; cursor: pointer; display: flex; align-items: center; font-weight: 500; }
-        .spot-name::before { content: '📍'; margin-right: 8px; font-size: 0.9em; }
-        .spot-intro { display: none; font-size: 0.9em; color: #666; background: #f9f9f9; padding: 10px; border-radius: 5px; margin-top: 5px; }
-        
-        .btn-group { display: flex; gap: 8px; margin-top: 15px; flex-wrap: wrap; }
-        .btn { flex: 1; min-width: 120px; text-align: center; padding: 10px; border-radius: 8px; text-decoration: none; font-size: 0.85em; font-weight: bold; display: flex; align-items: center; justify-content: center; }
-        .btn-hotel { background: #2c3e50; color: white; }
-        .btn-park { background: #f39c12; color: white; }
-        .btn::before { margin-right: 5px; }
+        .btn-hotel { 
+            display: inline-flex; align-items: center; background: var(--stone); color: white; 
+            padding: 10px 18px; border-radius: 50px; text-decoration: none; font-size: 0.85em; margin-top: 10px; width: 100%; justify-content: center;
+        }
+        .btn-park { background: var(--gold); color: white; border-radius: 50px; padding: 10px; text-decoration: none; font-size: 0.85em; flex: 1; text-align: center; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>🇮🇹 2026 義大利行程表</h1>
-    <div id="countdown" style="font-size: 0.8em; margin-top: 5px;"></div>
+    <h1 style="letter-spacing: 2px;">Italy Renaissance Journey</h1>
+    <p>2026.02.19 — 03.05</p>
 </header>
 
 <nav>
-    <div class="nav-item active" onclick="switchTab('flights', this)">✈️ 航班資訊</div>
-    <div class="nav-item" onclick="switchTab('itinerary', this)">📅 每日行程</div>
+    <div class="nav-item active" onclick="switchTab('flights', this)">FLIGHTS</div>
+    <div class="nav-item" onclick="switchTab('itinerary', this)">ITINERARY</div>
 </nav>
 
 <div class="container">
     <div id="flights" class="tab-content active">
-        <div class="card">
-            <div style="font-weight:bold; color:var(--primary); margin-bottom:10px;">👤 佳豪 (阿聯酋)</div>
-            <p style="font-size:0.9em; margin:5px 0;">去程：2/19 12:40 抵達 FCO</p>
-            <p style="font-size:0.9em; margin:5px 0;">回程：3/04 13:55 MXP 出發</p>
-        </div>
-        <div class="card">
-            <div style="font-weight:bold; color:#d4af37; margin-bottom:10px;">👥 爸媽 (阿提哈德)</div>
-            <p style="font-size:0.9em; margin:5px 0;">去程：2/20 05:40 抵達 FCO</p>
-            <p style="font-size:0.9em; margin:5px 0;">回程：3/04 10:25 MXP 出發</p>
+        <div class="day-card">
+            <div class="day-title">✈️ 航班資訊</div>
+            <p><strong>佳豪：</strong>2/19 12:40 抵達羅馬 (阿聯酋)</p>
+            <p><strong>爸媽：</strong>2/20 05:40 抵達羅馬 (阿提哈德)</p>
         </div>
     </div>
 
     <div id="itinerary" class="tab-content">
-        
         <div class="day-card">
-            <div class="day-info"><span>2/19-20</span><span>羅馬</span></div>
-            <div class="spot"><div class="spot-name" onclick="t(this)">羅馬市區 (噴泉/萬神殿)</div><div class="spot-intro">特雷維噴泉、萬神殿、納沃納廣場。</div></div>
-            <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=Via+Belisario+8+Rome" class="btn btn-hotel">🏨 羅馬飯店導航</a></div>
-        </div>
-
-        <div class="day-card">
-            <div class="day-info"><span>2/21</span><span>梵蒂岡</span></div>
-            <span class="booking-tag">已訂 09:00 博物館</span>
-            <div class="spot"><div class="spot-name" onclick="t(this)">梵蒂岡博物館 & 聖彼得大教堂</div><div class="spot-intro">必看：拉斐爾《雅典學院》、米開朗基羅《聖殤》。</div></div>
-            <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=Via+Belisario+8+Rome" class="btn btn-hotel">🏨 續住羅馬飯店</a></div>
-        </div>
-
-        <div class="day-card">
-            <div class="day-info"><span>2/22</span><span>羅馬古蹟</span></div>
-            <div class="spot"><div class="spot-name" onclick="t(this)">競技場 & 古羅馬廣場</div><div class="spot-intro">含凱旋門、卡拉卡拉浴場、農夫市集。</div></div>
-            <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=Via+Belisario+8+Rome" class="btn btn-hotel">🏨 續住羅馬飯店</a></div>
-        </div>
-
-        <div class="day-card">
-            <div class="day-info"><span>2/23</span><span>托斯卡尼 (租車)</span></div>
-            <div class="spot"><span class="spot-time">11:00</span><div class="spot-name" onclick="t(this)">天空之城 Civita</div><div class="spot-intro">步行長橋進入絕美孤城。</div></div>
-            <div class="spot"><span class="spot-time">13:00</span><div class="spot-name" onclick="t(this)">蒙特普齊亞諾</div><div class="spot-intro">紅酒之鄉。</div></div>
-            <div class="btn-group">
-                <a href="https://www.google.com/maps/search/?api=1&query=Civita+di+Bagnoregio+Parking" class="btn btn-park">🚗 天空之城停車</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=Via+di+Petrignano+2+Montepulciano" class="btn btn-hotel">🏨 莊園飯店導航</a>
+            <div class="day-header">
+                <span class="day-title">Day 10-11 威尼斯</span>
+                <span style="font-size: 0.8em;">2/28 - 3/1</span>
             </div>
-        </div>
-
-        <div class="day-card">
-            <div class="day-info"><span>2/24</span><span>托斯卡尼 (山城)</span></div>
-            <div class="spot"><span class="spot-time">11:00</span><div class="spot-name" onclick="t(this)">皮恩札 Pienza</div><div class="spot-intro">理想城市，必買起司。</div></div>
-            <div class="spot"><span class="spot-time">15:00</span><div class="spot-name" onclick="t(this)">錫耶納 Siena</div><div class="spot-intro">扇形廣場。</div></div>
-            <div class="btn-group">
-                <a href="https://www.google.com/maps/search/?api=1&query=Siena+Parking" class="btn btn-park">🚗 錫耶納停車</a>
-                <a href="https://www.google.com/maps/search/?api=1&query=Strada+delle+Cerreta+7+Monteriggioni" class="btn btn-hotel">🏨 聖路易吉酒店</a>
+            <div class="spot">
+                <div class="spot-name" onclick="toggle(this)">聖馬可廣場 & 大運河</div>
+                <div class="spot-intro">威尼斯的靈魂，欣賞聖馬可大教堂與嘆息橋。</div>
             </div>
+            <div class="spot">
+                <div class="spot-name" onclick="toggle(this)">彩色島 (Burano)</div>
+                <div class="spot-intro">最繽紛的離島，房屋色彩斑斕，必看玻璃吹製工藝。</div>
+            </div>
+            <a href="https://www.google.com/maps/search/?api=1&query=B%26B+HOTEL+Venezia+Laguna" class="btn-hotel">🏨 威尼斯飯店：B&B HOTEL Venezia Laguna</a>
         </div>
 
         <div class="day-card">
-            <div class="day-info"><span>2/25</span><span>比薩 / 佛羅倫斯</span></div>
-            <div class="spot"><div class="spot-name" onclick="t(this)">比薩斜塔 & Outlet</div><div class="spot-intro">拍照後前往 The Mall 購物。</div></div>
-            <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=Via+Chiara+2+Florence" class="btn btn-hotel">🏨 佛羅倫斯飯店</a></div>
-        </div>
-
-        <div class="day-card">
-            <div class="day-info"><span>2/26</span><span>佛羅倫斯</span></div>
-            <span class="booking-tag">已訂 08:30 學院美術館</span>
-            <div class="spot"><div class="spot-name" onclick="t(this)">大衛像 / 聖母百花大教堂</div><div class="spot-intro">及維奇歐橋。</div></div>
-            <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=Via+Chiara+2+Florence" class="btn btn-hotel">🏨 續住佛羅倫斯</a></div>
-        </div>
-
-        <div class="day-card">
-            <div class="day-info"><span>2/27</span><span>佛羅倫斯美術館</span></div>
-            <span class="booking-tag">已訂 09:00 烏菲茲美術館</span>
-            <div class="spot"><div class="spot-name" onclick="t(this)">烏菲茲 / 米開朗基羅廣場</div><div class="spot-intro">看夕陽與名畫。</div></div>
-            <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=Via+Chiara+2+Florence" class="btn btn-hotel">🏨 續住佛羅倫斯</a></div>
-        </div>
-
-        <div class="day-card">
-            <div class="day-info"><span>2/28-3/1</span><span>威尼斯</span></div>
-            <div class="spot"><div class="spot-name" onclick="t(this)">聖馬可廣場 / 彩色島</div><div class="spot-intro">威尼斯本島與離島行程。</div></div>
-            <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=BB+HOTEL+Venezia+Laguna" class="btn btn-hotel">🏨 威尼斯飯店導航</a></div>
-        </div>
-
-        <div class="day-card">
-            <div class="day-info"><span>3/2-3</span><span>米蘭</span></div>
-            <span class="booking-tag">已約 08:15 最後的晚餐</span>
-            <div class="spot"><div class="spot-name" onclick="t(this)">米蘭大教堂 / 運河區</div><div class="spot-intro">達文西經典壁畫。</div></div>
-            <div class="btn-group"><a href="https://www.google.com/maps/search/?api=1&query=Via+Gaspare+Spontini+11+Milan" class="btn btn-hotel">🏨 米蘭飯店導航</a></div>
-        </div>
-
-        <div class="day-card">
-            <div class="day-info"><span>3/4</span><span>返程</span></div>
-            <div class="spot">10:15 爸媽 (EY) / 13:55 佳豪 (EK)</div>
+            <div class="day-header">
+                <span class="day-title">Day 12-13 米蘭</span>
+                <span style="font-size: 0.8em;">3/2 - 3/3</span>
+            </div>
+            <div style="background: #FFF3CD; padding: 5px; font-size: 0.8em; margin-bottom: 10px;">⚠️ 3/3 08:15 最後的晚餐 (已預約)</div>
+            <a href="https://www.google.com/maps/search/?api=1&query=Spontini+Apartment+Milan" class="btn-hotel">🏨 米蘭住宿導航</a>
         </div>
     </div>
 </div>
@@ -149,19 +103,10 @@
         el.classList.add('active');
         window.scrollTo(0,0);
     }
-    function t(el) {
+    function toggle(el) {
         const intro = el.nextElementSibling;
         intro.style.display = (intro.style.display === 'block') ? 'none' : 'block';
     }
-    const travelDate = new Date('2026-02-19T00:20:00').getTime();
-    setInterval(() => {
-        const now = new Date().getTime();
-        const diff = travelDate - now;
-        if (diff > 0) {
-            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-            document.getElementById('countdown').innerHTML = `距離出發還有 ${d} 天`;
-        }
-    }, 1000);
 </script>
 
 </body>
